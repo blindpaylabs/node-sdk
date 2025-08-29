@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+      "allowSyntheticDefaultImports": true,
+      "alwaysStrict": true,
+      "declaration": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "moduleResolution": "node",
+      "noEmit": true,
+      "noFallthroughCasesInSwitch": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "skipLibCheck": true,
+      "outDir": "build",
+      "resolveJsonModule": true,
+      "strict": true,
+      "target": "es6",
+      "noUncheckedIndexedAccess": true,
+      "noImplicitOverride": true,
+      "useUnknownInCatchVariables": true,
+      "verbatimModuleSyntax": true,
+      "declarationMap": true,
+      "sourceMap": true,
+      "incremental": true,
+      "rootDir": "./src",
+      "types": ["node"]
+  
+    },
+    "include": ["src"]
+  }
