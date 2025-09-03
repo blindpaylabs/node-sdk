@@ -1,49 +1,56 @@
 {
-  "name": "blindpay-node",
-  "version": "18.5.0",
-  "description": "Blindpay API wrapper",
-  "keywords": [
-    "blindpay",
-    "global payments",
-    "api infrastructure",
-    "api"
-  ],
-  "homepage": "https://github.com/blindpaylabs/node-sdk",
-  "author": "Blindpay <support-email-here@blindpay.com> (https://blindpay.com/)",
-  "contributors": [
-    "Gabriel Alves <alves@blindpay.com> (https://alvseven.com/)"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/blindpaylabs/node-sdk.git"
-  },
-  "bugs": "https://github.com/blindpaylabs/node-sdk/issues",
-  "engines": {
-    "node": ">=18.*"
-  },
-  "main": "TODO",
-  "types": "types/index.d.ts",
-  "devDependencies": {
-    "@types/node": ">=12.0.0",
-    "mocha": "^8.4.0",
-    "mocha-junit-reporter": "^2.1.0",
-    "nock": "^13.2.9",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
-  },
-  "peerDependencies": {
-    "@types/node": ">=18.x.x"
-  },
-  "peerDependenciesMeta": {
-    "@types/node": {
-      "optional": true
+    "name": "blindpay-node",
+    "version": "18.5.0",
+    "description": "Blindpay API wrapper",
+    "keywords": [
+        "blindpay",
+        "global payments",
+        "api infrastructure",
+        "api"
+    ],
+    "homepage": "https://github.com/blindpaylabs/node-sdk",
+    "author": "Blindpay <support-email-here@blindpay.com> (https://blindpay.com/)",
+    "contributors": [
+        "Gabriel Alves <alves@blindpay.com> (https://alvseven.com/)"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/blindpaylabs/node-sdk.git"
+    },
+    "bugs": "https://github.com/blindpaylabs/node-sdk/issues",
+    "engines": {
+        "node": ">=18.*"
+    },
+    "main": "TODO",
+    "types": "types/index.d.ts",
+    "devDependencies": {
+        "@biomejs/biome": "^2.2.2",
+        "@types/node": ">=12.0.0",
+        "mocha": "^8.4.0",
+        "mocha-junit-reporter": "^2.1.0",
+        "nock": "^13.2.9",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.9.4"
+    },
+    "peerDependencies": {
+        "@types/node": ">=18.x.x"
+    },
+    "peerDependenciesMeta": {
+        "@types/node": {
+            "optional": true
+        }
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "tsup src",
+        "format": "biome format --write .",
+        "format:check": "biome format .",
+        "lint": "biome lint .",
+        "lint:fix": "biome lint --write .",
+        "check": "biome check .",
+        "check:fix": "biome check --write ."
+    },
+    "exports": {
+        "types": "./types/index.d.ts"
     }
-  },
-  "license": "MIT",
-  "scripts": {
-    "build": "tsup src"
-  },
-  "exports": {
-    "types": "./types/index.d.ts"
-  }
 }

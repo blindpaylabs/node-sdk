@@ -1,83 +1,172 @@
 import { version } from "../package.json";
-import { BlindpayError } from "./internal/blindpay-error";
 import type { BlindpayApiResponse } from "../types";
+import type { InternalApiClient } from "./internal/api-client";
+import { BlindpayError } from "./internal/blindpay-error";
+import { createApiKeysResource } from "./resources/api-keys";
+import { createAvailableResource } from "./resources/available";
+import { createBankAccountsResource } from "./resources/bank-accounts";
+import { createInstancesResource } from "./resources/instances";
+import { createPartnerFeesResource } from "./resources/partner-fees";
+import { createPayinsResource } from "./resources/payins";
+import { createQuoteResource } from "./resources/payins/quotes";
+import { createPayoutsResource } from "./resources/payouts";
+import { createReceiversResource } from "./resources/receivers";
+import { createVirtualAccountsResource } from "./resources/virtual-accounts";
+import { createBlockchainWalletsResource } from "./resources/wallets/blockchain";
+import { createOfframpWalletsResource } from "./resources/wallets/offramp";
+import { createWebhookEndpointsResource } from "./resources/webhooks";
 
 export class Blindpay {
-    private readonly baseUrl = "https://api.blindpay.com/";
-    private readonly headers: Record<string, string>
+    // Options
+    private readonly baseUrl = "https://api.blindpay.com/v1";
+    private readonly headers: Record<string, string>;
+    private readonly apiKey: string;
+    private readonly api: InternalApiClient;
 
-    readonly apiKey: string;    
+    // Resources
+    readonly available: ReturnType<typeof createAvailableResource>;
+    readonly partnerFees: ReturnType<typeof createPartnerFeesResource>;
+    readonly payins: ReturnType<typeof createPayinsResource> 
+    readonly quotes: ReturnType<typeof createQuoteResource>;
+    readonly payouts: ReturnType<typeof createPayoutsResource>;
+    readonly virtualAccounts: ReturnType<typeof createVirtualAccountsResource>;
+    readonly receivers: ReturnType<typeof createReceiversResource> & {
+        bankAccounts: ReturnType<typeof createBankAccountsResource>;
+    };
+    readonly instances: ReturnType<typeof createInstancesResource> & {
+        apiKeys: ReturnType<typeof createApiKeysResource>;
+        webhookEndpoints: ReturnType<typeof createWebhookEndpointsResource>;
+    };
+    readonly wallets: {
+        blockchain: ReturnType<typeof createBlockchainWalletsResource>;
+        offramp: ReturnType<typeof createOfframpWalletsResource>;
+    };
 
     constructor(apiKey: string) {
-
         if (!apiKey) {
             throw new BlindpayError("API key not provided");
         }
 
         this.apiKey = apiKey;
+
         this.headers = {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            Accept: "application/json",
             "User-Agent": `blindpay-node/${version}`,
-            "Authorization": `Bearer ${this.apiKey}`,
+            Authorization: `Bearer ${this.apiKey}`,
+        };
+
+        // Create internal API client with bound methods
+        this.api = {
+            get: this.get.bind(this),
+            post: this.post.bind(this),
+            put: this.put.bind(this),
+            patch: this.patch.bind(this),
+            delete: this.delete.bind(this),
+        };
+
+        this.available = createAvailableResource(this.api);
+
+        this.instances = {
+            ...createInstancesResource(this.api),
+            apiKeys: createApiKeysResource(this.api),
+            webhookEndpoints: createWebhookEndpointsResource(this.api),
+        };
+
+        this.partnerFees = createPartnerFeesResource(this.api);
+
+        this.payins = {
+            ...createPayinsResource(this.api),
+        };
+
+        this.quotes = createQuoteResource(this.api);
+        
+        this.payouts = createPayoutsResource(this.api);
+
+        this.receivers = {
+            ...createReceiversResource(this.api),
+            bankAccounts: createBankAccountsResource(this.api),
+        };
+
+        this.virtualAccounts = createVirtualAccountsResource(this.api);
+
+        this.wallets = {
+            blockchain: createBlockchainWalletsResource(this.api),
+            offramp: createOfframpWalletsResource(this.api),
         };
     }
 
-    async request <T>(method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH", path: string, body?: Record<string, unknown>): Promise<BlindpayApiResponse<T>> {
+    private async request<T>(
+        method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
+        path: string,
+        body?: Record<string, unknown>
+    ): Promise<BlindpayApiResponse<T>> {
         try {
             const response = await fetch(`${this.baseUrl}${path}`, {
                 method,
                 headers: this.headers,
-                body: JSON.stringify(body),
-            })
+                body: body ? JSON.stringify(body) : undefined,
+            });
 
             if (!response.ok) {
-                const error = await response.json()
+                const error = await response.json();
 
                 return {
                     data: null,
-                    error                }
+                    error,
+                };
             }
 
-            const data = await response.json()
+            const data = await response.json();
 
             return {
                 data,
                 error: null,
-            }
-        }
-
-        catch (error) {
+            };
+        } catch (error) {
             if (error instanceof Error) {
                 return {
                     data: null,
-                    error                }
+                    error,
+                };
             }
 
-           return {
-            data: null,
-            error,
-           }
+            return {
+                data: null,
+                error,
+            };
         }
     }
 
-    async get<T>(path: string): Promise<BlindpayApiResponse<T>> {
+    private async get<T>(path: string): Promise<BlindpayApiResponse<T>> {
         return this.request<T>("GET", path);
     }
 
-    async post<T>(path: string, body?: Record<string, unknown>): Promise<BlindpayApiResponse<T>> {
+    private async post<T>(
+        path: string,
+        body: Record<string, unknown>
+    ): Promise<BlindpayApiResponse<T>> {
         return this.request<T>("POST", path, body);
     }
 
-    async put<T>(path: string, body?: Record<string, unknown>): Promise<BlindpayApiResponse<T>> {
+    private async put<T>(
+        path: string,
+        body: Record<string, unknown>
+    ): Promise<BlindpayApiResponse<T>> {
         return this.request<T>("PUT", path, body);
     }
 
-    async patch<T>(path: string, body?: Record<string, unknown>): Promise<BlindpayApiResponse<T>> {
+    private async patch<T>(
+        path: string,
+        body: Record<string, unknown>
+    ): Promise<BlindpayApiResponse<T>> {
         return this.request<T>("PATCH", path, body);
     }
 
-    async delete<T>(path: string): Promise<BlindpayApiResponse<T>> {
-        return this.request<T>("DELETE", path);
+    private async delete<T>(
+        path: string,
+        body?: Record<string, unknown>
+    ): Promise<BlindpayApiResponse<T>> {
+        return this.request<T>("DELETE", path, body);
     }
 }
