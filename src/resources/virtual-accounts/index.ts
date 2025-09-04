@@ -1,60 +1,94 @@
 import type {
     BlindpayApiResponse,
-    PaginationMetadata,
-    PaginationParams,
-    VirtualAccount,
+    StablecoinToken,
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type ListVirtualAccountsInput = {
-    instanceId: string;
-    params?: PaginationParams & {
-        receiver_id?: string;
+export type VirtualAccount = {
+    id: string;
+    us: {
+        ach: {
+            routing_number: string;
+            account_number: string;
+        };
+        wire: {
+            routing_number: string;
+            account_number: string;
+        };
+        rtp: {
+            routing_number: string;
+            account_number: string;
+        };
+        swift_bic_code: string;
+        account_type: string;
+        beneficiary: {
+            name: string;
+            address_line_1: string;
+            address_line_2: string;
+        };
+        receiving_bank: {
+            name: string;
+            address_line_1: string;
+            address_line_2: string;
+        };
     };
-};
-
-export type ListVirtualAccountsResponse = {
-    data: VirtualAccount[];
-    metadata: PaginationMetadata;
+    token: StablecoinToken;
+    blockchain_wallet_id: string;
 };
 
 export type CreateVirtualAccountInput = {
     instanceId: string;
+    receiverId: string;
     body: {
-        receiver_id: string;
+        blockchain_wallet_id: string;
+        token: StablecoinToken;
     };
 };
 
+export type CreateVirtualAccountResponse = VirtualAccount
+
 export type GetVirtualAccountInput = {
     instanceId: string;
-    virtualAccountId: string;
+    receiverId: string;
 };
+
+export type GetVirtualAccountResponse = VirtualAccount
+
+export type UpdateVirtualAccountInput = {
+    instanceId: string;
+    receiverId: string;
+    body: {
+        blockchain_wallet_id: string;
+        token: StablecoinToken;
+    };
+}
 
 export function createVirtualAccountsResource(client: InternalApiClient) {
     return {
-        list({
+        update({
             instanceId,
-            params,
-        }: ListVirtualAccountsInput): Promise<BlindpayApiResponse<ListVirtualAccountsResponse>> {
-            const queryParams = params ? `?${new URLSearchParams(params).toString()}` : "";
-            return client.get<ListVirtualAccountsResponse>(
-                `/instances/${instanceId}/virtual_accounts${queryParams}`
+            receiverId,
+            body,
+        }: UpdateVirtualAccountInput): Promise<BlindpayApiResponse<void>> {
+            return client.put(
+                `/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`,
+                body
             );
         },
-
         create({
             instanceId,
+            receiverId,
             body,
-        }: CreateVirtualAccountInput): Promise<BlindpayApiResponse<VirtualAccount>> {
-            return client.post<VirtualAccount>(`/instances/${instanceId}/virtual_accounts`, body);
+        }: CreateVirtualAccountInput): Promise<BlindpayApiResponse<CreateVirtualAccountResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`, body);
         },
 
         get({
             instanceId,
-            virtualAccountId,
-        }: GetVirtualAccountInput): Promise<BlindpayApiResponse<VirtualAccount>> {
-            return client.get<VirtualAccount>(
-                `/instances/${instanceId}/virtual_accounts/${virtualAccountId}`
+            receiverId,
+        }: GetVirtualAccountInput): Promise<BlindpayApiResponse<GetVirtualAccountResponse>> {
+            return client.get(
+                `/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`
             );
         },
     };

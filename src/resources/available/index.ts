@@ -1,35 +1,30 @@
 import type {
-    AvailableBankAccount,
-    AvailableNetwork,
-    AvailableToken,
     BlindpayApiResponse,
+    Rail,
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type ListAvailableBankAccountsResponse = {
-    data: AvailableBankAccount[];
-};
+export type GetBankDetailsResponse = {
+    items: Array<{
+        label: string;
+        value: string;
+        is_active: boolean
+    }>
+}
 
-export type ListAvailableNetworksResponse = {
-    data: AvailableNetwork[];
-};
-
-export type ListAvailableTokensResponse = {
-    data: AvailableToken[];
-};
+export type GetRailsResponse = Array<{
+    label: string;
+    value: Rail;
+    country: boolean;
+}>
 
 export function createAvailableResource(client: InternalApiClient) {
     return {
-        bankAccounts(): Promise<BlindpayApiResponse<ListAvailableBankAccountsResponse>> {
-            return client.get<ListAvailableBankAccountsResponse>(`/available/bank_accounts`);
+        getBankDetails(rail: Rail): Promise<BlindpayApiResponse<GetBankDetailsResponse>> {
+            return client.get(`/available/bank-details?rail=${rail}`);
         },
-
-        networks(): Promise<BlindpayApiResponse<ListAvailableNetworksResponse>> {
-            return client.get<ListAvailableNetworksResponse>(`/available/networks`);
-        },
-
-        tokens(): Promise<BlindpayApiResponse<ListAvailableTokensResponse>> {
-            return client.get<ListAvailableTokensResponse>(`/available/tokens`);
+        getRails(): Promise<BlindpayApiResponse<GetRailsResponse>> {
+            return client.get('/available/rails');
         },
     };
 }

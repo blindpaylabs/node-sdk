@@ -63,17 +63,17 @@ export function createReceiversResource(client: InternalApiClient) {
             params,
         }: ListReceiversInput): Promise<BlindpayApiResponse<ListReceiversResponse>> {
             const queryParams = params ? `?${new URLSearchParams(params).toString()}` : "";
-            return client.get<ListReceiversResponse>(
+            return client.get(
                 `/instances/${instanceId}/receivers${queryParams}`
             );
         },
 
         create({ instanceId, body }: CreateReceiverInput): Promise<BlindpayApiResponse<Receiver>> {
-            return client.post<Receiver>(`/instances/${instanceId}/receivers`, body);
+            return client.post(`/instances/${instanceId}/receivers`, body);
         },
 
         get({ instanceId, receiverId }: GetReceiverInput): Promise<BlindpayApiResponse<Receiver>> {
-            return client.get<Receiver>(`/instances/${instanceId}/receivers/${receiverId}`);
+            return client.get(`/instances/${instanceId}/receivers/${receiverId}`);
         },
 
         update({
@@ -81,7 +81,7 @@ export function createReceiversResource(client: InternalApiClient) {
             receiverId,
             body,
         }: UpdateReceiverInput): Promise<BlindpayApiResponse<Receiver>> {
-            return client.patch<Receiver>(`/instances/${instanceId}/receivers/${receiverId}`, body);
+            return client.patch(`/instances/${instanceId}/receivers/${receiverId}`, body);
         },
     };
 }

@@ -1,5 +1,6 @@
 import type {
     BlindpayApiResponse,
+    Currency,
     CurrencyType,
     Network,
     StablecoinToken,
@@ -48,13 +49,36 @@ export type CreateQuoteResponse = {
     description: string | null;
 };
 
+export type GetFxRateResponse = {
+    blindpay_quotation: number;
+    commercial_quotation: number;
+    instance_flat_fee: number;
+    instance_percentage_fee: number;
+};
+
+export type GetFxRateInput = {
+    instanceId: string;
+    body: {
+        currency: CurrencyType
+        from: Currency,
+        to: Currency,
+        request_amount: number;
+    }
+}
+
 export function createQuoteResource(client: InternalApiClient) {
     return {
         create({
             instanceId,
             body,
         }: CreateQuoteInput): Promise<BlindpayApiResponse<CreateQuoteResponse>> {
-            return client.post<CreateQuoteResponse>(`/instances/${instanceId}/quotes`, body);
+            return client.post<CreateQuoteResponse>(`/instances/${instanceId}/payin-quotes`, body);
+        },
+        getFxRate({
+            instanceId,
+            body,
+        }: GetFxRateInput): Promise<BlindpayApiResponse<GetFxRateResponse>> {
+            return client.post<GetFxRateResponse>(`/instances/${instanceId}/payin-quotes/fx`, body);
         },
     };
 }
