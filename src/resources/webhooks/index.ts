@@ -1,9 +1,7 @@
-import type {
-    BlindpayApiResponse,    
-} from "../../../types";
+import type { BlindpayApiResponse } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type WebhookEvents = 
+export type WebhookEvents =
     | "receiver.new"
     | "receiver.update"
     | "bankAccount.new"
@@ -27,16 +25,16 @@ export type CreateWebhookEndpointInput = {
 
 export type CreateWebhookEndpointResponse = {
     id: string;
-}
+};
 
 export type ListWebhookEndpointsInput = {
     instanceId: string;
-}
+};
 
 export type DeleteWebhookEndpointInput = {
     instanceId: string;
     id: string;
-}
+};
 
 export type ListWebhookEndpointsResponse = Array<{
     id: string;
@@ -46,56 +44,55 @@ export type ListWebhookEndpointsResponse = Array<{
     instance_id: string;
     created_at: string;
     updated_at: string;
-}>
+}>;
 
 export type GetWebhookEndpointSecretInput = {
     instanceId: string;
     id: string;
-}
+};
 
 export type GetWebhookEndpointSecretResponse = {
     key: string;
-}
+};
 
 export type GetPortalAccessUrlInput = {
     instanceId: string;
-}
+};
 
 export type GetPortalAccessUrlResponse = {
     url: string;
-}
+};
 
 export function createWebhookEndpointsResource(client: InternalApiClient) {
     return {
         list({
             instanceId,
         }: ListWebhookEndpointsInput): Promise<BlindpayApiResponse<ListWebhookEndpointsResponse>> {
-            return client.get(
-                `/instances/${instanceId}/webhook-endpoints`
-            );
+            return client.get(`/instances/${instanceId}/webhook-endpoints`);
         },
         create({
             instanceId,
             body,
-        }: CreateWebhookEndpointInput): Promise<BlindpayApiResponse<CreateWebhookEndpointResponse>> {
+        }: CreateWebhookEndpointInput): Promise<
+            BlindpayApiResponse<CreateWebhookEndpointResponse>
+        > {
             return client.post(`/instances/${instanceId}/webhook-endpoints`, body);
         },
-        delete({
-            instanceId,
-            id,
-        }: DeleteWebhookEndpointInput): Promise<BlindpayApiResponse<void>> {
+        delete({ instanceId, id }: DeleteWebhookEndpointInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/webhook-endpoints/${id}`);
         },
         getSecret({
-            instanceId, 
+            instanceId,
             id,
-        }: GetWebhookEndpointSecretInput): Promise<BlindpayApiResponse<GetWebhookEndpointSecretResponse>> {
+        }: GetWebhookEndpointSecretInput): Promise<
+            BlindpayApiResponse<GetWebhookEndpointSecretResponse>
+        > {
             return client.get(`/instances/${instanceId}/webhook-endpoints/${id}/secret`);
         },
         getPortalAccessUrl({
             instanceId,
         }: GetPortalAccessUrlInput): Promise<BlindpayApiResponse<GetPortalAccessUrlResponse>> {
             return client.get(`/instances/${instanceId}/webhook-endpoints/portal-access`);
-        }
+        },
     };
 }

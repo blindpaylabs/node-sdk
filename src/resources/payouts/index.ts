@@ -50,7 +50,7 @@ export type Payout = {
     blindpay_quotation: number;
     total_fee_amount: number;
     receiver_local_amount: number;
-    currency: Exclude<Currency, 'USDT' | 'USDB'>;
+    currency: Exclude<Currency, "USDT" | "USDB">;
     transaction_document_file: string;
     transaction_document_type: TransactionDocumentType;
     transaction_document_id: string;
@@ -85,12 +85,12 @@ export type Payout = {
     transfers_account?: string;
     transfers_type: "CVU" | "CBU" | "ALIAS";
     has_virtual_account: boolean;
-}
+};
 
 export type ListPayoutsInput = {
     instanceId: string;
     params?: PaginationParams & {
-        receiver_id?: string; 
+        receiver_id?: string;
     };
 };
 
@@ -118,18 +118,18 @@ export type GetPayoutInput = {
     id: string;
 };
 
-export type GetPayoutResponse = Payout
+export type GetPayoutResponse = Payout;
 
 export type GetPayoutTrackInput = {
-    id: string
-}
+    id: string;
+};
 
-export type GetPayoutTrackResponse = Payout
+export type GetPayoutTrackResponse = Payout;
 
 export type ExportPayoutsInput = {
     instanceId: string;
-    params?: Pick<PaginationParams, 'limit' | 'offset'>;
-}
+    params?: Pick<PaginationParams, "limit" | "offset">;
+};
 
 export type ExportPayoutsResponse = Payout[];
 
@@ -138,12 +138,12 @@ export type AuthorizeStellarTokenInput = {
     body: {
         quote_id: string;
         sender_wallet_address: string;
-    }
-}
+    };
+};
 
 export type AuthorizeStellarTokenResponse = {
     transaction_hash: string;
-}
+};
 
 export type CreateStellarPayoutInput = {
     instanceId: string;
@@ -151,8 +151,8 @@ export type CreateStellarPayoutInput = {
         quote_id: string;
         sender_wallet_address: string;
         signed_transaction?: string;
-    }
-}
+    };
+};
 
 export type CreateStellarPayoutResponse = {
     id: string;
@@ -164,15 +164,15 @@ export type CreateStellarPayoutResponse = {
     tracking_partner_fee?: TrackingPartnerFee;
     tracking_liquidity?: TrackingLiquidity;
     receiver_id: string;
-}
+};
 
 export type CreateEvmPayoutInput = {
     instanceId: string;
     body: {
         quote_id: string;
         sender_wallet_address: string;
-    }
-}
+    };
+};
 
 export type CreateEvmPayoutResponse = {
     id: string;
@@ -184,7 +184,7 @@ export type CreateEvmPayoutResponse = {
     tracking_partner_fee?: TrackingPartnerFee;
     tracking_liquidity?: TrackingLiquidity;
     receiver_id: string;
-}
+};
 
 export function createPayoutsResource(client: InternalApiClient) {
     return {
@@ -193,27 +193,41 @@ export function createPayoutsResource(client: InternalApiClient) {
             params,
         }: ListPayoutsInput): Promise<BlindpayApiResponse<ListPayoutsResponse>> {
             const queryParams = params ? `?${new URLSearchParams(params)}` : "";
-            return client.get(
-                `/instances/${instanceId}/payouts${queryParams}`
-            );
-        },                                     
-        export({ instanceId, params }: ExportPayoutsInput): Promise<BlindpayApiResponse<ExportPayoutsResponse>> {
+            return client.get(`/instances/${instanceId}/payouts${queryParams}`);
+        },
+        export({
+            instanceId,
+            params,
+        }: ExportPayoutsInput): Promise<BlindpayApiResponse<ExportPayoutsResponse>> {
             const queryParams = params ? `?${new URLSearchParams(params)}` : "";
             return client.get(`/instances/${instanceId}/export/payouts${queryParams}`);
         },
         get({ instanceId, id }: GetPayoutInput): Promise<BlindpayApiResponse<GetPayoutResponse>> {
             return client.get(`/instances/${instanceId}/payouts/${id}`);
         },
-        getTrack({ id }: GetPayoutTrackInput): Promise<BlindpayApiResponse<GetPayoutTrackResponse>> {
+        getTrack({
+            id,
+        }: GetPayoutTrackInput): Promise<BlindpayApiResponse<GetPayoutTrackResponse>> {
             return client.get(`/e/payouts/${id}`);
         },
-        authorizeStellarToken({ instanceId, body }: AuthorizeStellarTokenInput): Promise<BlindpayApiResponse<AuthorizeStellarTokenResponse>> {
+        authorizeStellarToken({
+            instanceId,
+            body,
+        }: AuthorizeStellarTokenInput): Promise<
+            BlindpayApiResponse<AuthorizeStellarTokenResponse>
+        > {
             return client.post(`/instances/${instanceId}/payouts/stellar/authorize`, body);
         },
-        createStellar({ instanceId, body }: CreateStellarPayoutInput): Promise<BlindpayApiResponse<CreateStellarPayoutResponse>> {
+        createStellar({
+            instanceId,
+            body,
+        }: CreateStellarPayoutInput): Promise<BlindpayApiResponse<CreateStellarPayoutResponse>> {
             return client.post(`/instances/${instanceId}/payouts/stellar`, body);
         },
-        createEvm({ instanceId, body }: CreateEvmPayoutInput): Promise<BlindpayApiResponse<CreateEvmPayoutResponse>> {
+        createEvm({
+            instanceId,
+            body,
+        }: CreateEvmPayoutInput): Promise<BlindpayApiResponse<CreateEvmPayoutResponse>> {
             return client.post(`/instances/${instanceId}/payouts/evm`, body);
         },
     };

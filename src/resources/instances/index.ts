@@ -1,9 +1,7 @@
-import type {
-    BlindpayApiResponse,
-} from "../../../types";
+import type { BlindpayApiResponse } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type InstanceMemberRole = 
+export type InstanceMemberRole =
     | "owner"
     | "admin"
     | "finance"
@@ -24,7 +22,7 @@ export type GetInstanceMembersResponse = Array<{
     last_name: string;
     image_url: string;
     created_at: string;
-    role: InstanceMemberRole; 
+    role: InstanceMemberRole;
 }>;
 
 export type UpdateInstanceInput = {
@@ -54,7 +52,9 @@ export type UpdateInstanceMemberRoleInput = {
 
 export function createInstancesResource(client: InternalApiClient) {
     return {
-        getMembers({ instanceId }: GetInstanceMembersInput): Promise<BlindpayApiResponse<GetInstanceMembersResponse>> {
+        getMembers({
+            instanceId,
+        }: GetInstanceMembersInput): Promise<BlindpayApiResponse<GetInstanceMembersResponse>> {
             return client.get(`/instances/${instanceId}/members`);
         },
         update({ instanceId, body }: UpdateInstanceInput): Promise<BlindpayApiResponse<void>> {
@@ -63,10 +63,17 @@ export function createInstancesResource(client: InternalApiClient) {
         delete({ instanceId }: DeleteInstanceInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}`);
         },
-        deleteMember({ instanceId, id }: DeleteInstanceMemberInput): Promise<BlindpayApiResponse<void>> {
+        deleteMember({
+            instanceId,
+            id,
+        }: DeleteInstanceMemberInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/members/${id}`);
         },
-        updateMemberRole({ instanceId, id, body }: UpdateInstanceMemberRoleInput): Promise<BlindpayApiResponse<void>> {
+        updateMemberRole({
+            instanceId,
+            id,
+            body,
+        }: UpdateInstanceMemberRoleInput): Promise<BlindpayApiResponse<void>> {
             return client.put(`/instances/${instanceId}/members/${id}`, body);
         },
     };

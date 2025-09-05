@@ -40,9 +40,8 @@
     "license": "MIT",
     "scripts": {
         "build": "tsup src",
-        "check": "biome check .",
-        "format:check": "biome format .",
-        "lint:fix": "biome lint --write ."
+        "lint:check": "biome check .",
+        "lint:fix": "biome check --write ."
     },
     "exports": {
         "types": "./types/index.d.ts"

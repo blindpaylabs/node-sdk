@@ -1,6 +1,4 @@
-import type {
-    BlindpayApiResponse,
-} from "../../../types";
+import type { BlindpayApiResponse } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
 type ApiKey = {
@@ -14,13 +12,13 @@ type ApiKey = {
     instance_id: string;
     created_at: string;
     updated_at: string;
-}
+};
 
 export type ListApiKeysInput = {
     instanceId: string;
 };
 
-export type ListApiKeysResponse = ApiKey[]
+export type ListApiKeysResponse = ApiKey[];
 
 export type CreateApiKeyInput = {
     instanceId: string;
@@ -34,14 +32,14 @@ export type CreateApiKeyInput = {
 export type CreateApiKeyResponse = {
     id: string;
     token: string;
-}
+};
 
 export type GetApiKeyInput = {
     instanceId: string;
     id: string;
 };
 
-export type GetApiKeyResponse = ApiKey
+export type GetApiKeyResponse = ApiKey;
 
 export type DeleteApiKeyInput = {
     instanceId: string;
@@ -52,18 +50,18 @@ export type InitiateTosInput = {
     instanceId: string;
     body: {
         idempotency_key: string;
-    }
+    };
 };
 
 export type InitiateTosResponse = {
     url: string;
-}
+};
 
 export type AcceptTosInput = {
     body: {
-    idempotency_key: string;
+        idempotency_key: string;
         session_token: string;
-    }
+    };
 };
 
 export type AcceptTosResponse = {
@@ -72,14 +70,13 @@ export type AcceptTosResponse = {
 
 export function createApiKeysResource(client: InternalApiClient) {
     return {
-        list({
-            instanceId,
-        }: ListApiKeysInput): Promise<BlindpayApiResponse<ListApiKeysResponse>> {
-            return client.get<ListApiKeysResponse>(
-                `/instances/${instanceId}/api-keys`
-            );
+        list({ instanceId }: ListApiKeysInput): Promise<BlindpayApiResponse<ListApiKeysResponse>> {
+            return client.get<ListApiKeysResponse>(`/instances/${instanceId}/api-keys`);
         },
-        create({ instanceId, body }: CreateApiKeyInput): Promise<BlindpayApiResponse<CreateApiKeyResponse>> {
+        create({
+            instanceId,
+            body,
+        }: CreateApiKeyInput): Promise<BlindpayApiResponse<CreateApiKeyResponse>> {
             return client.post(`/instances/${instanceId}/api-keys`, body);
         },
         get({ instanceId, id }: GetApiKeyInput): Promise<BlindpayApiResponse<GetApiKeyResponse>> {
@@ -88,7 +85,10 @@ export function createApiKeysResource(client: InternalApiClient) {
         delete({ instanceId, id }: DeleteApiKeyInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/api-keys/${id}`);
         },
-        initiateTos({ instanceId, body }: InitiateTosInput): Promise<BlindpayApiResponse<InitiateTosResponse>> {
+        initiateTos({
+            instanceId,
+            body,
+        }: InitiateTosInput): Promise<BlindpayApiResponse<InitiateTosResponse>> {
             return client.post(`/e/instances/${instanceId}/tos`, body);
         },
         acceptTos({ body }: AcceptTosInput): Promise<BlindpayApiResponse<AcceptTosResponse>> {

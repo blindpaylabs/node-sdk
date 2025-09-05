@@ -1,7 +1,4 @@
-import type {
-    BlindpayApiResponse,
-    StablecoinToken,
-} from "../../../types";
+import type { BlindpayApiResponse, StablecoinToken } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
 export type VirtualAccount = {
@@ -45,14 +42,14 @@ export type CreateVirtualAccountInput = {
     };
 };
 
-export type CreateVirtualAccountResponse = VirtualAccount
+export type CreateVirtualAccountResponse = VirtualAccount;
 
 export type GetVirtualAccountInput = {
     instanceId: string;
     receiverId: string;
 };
 
-export type GetVirtualAccountResponse = VirtualAccount
+export type GetVirtualAccountResponse = VirtualAccount;
 
 export type UpdateVirtualAccountInput = {
     instanceId: string;
@@ -61,7 +58,7 @@ export type UpdateVirtualAccountInput = {
         blockchain_wallet_id: string;
         token: StablecoinToken;
     };
-}
+};
 
 export function createVirtualAccountsResource(client: InternalApiClient) {
     return {
@@ -80,16 +77,17 @@ export function createVirtualAccountsResource(client: InternalApiClient) {
             receiverId,
             body,
         }: CreateVirtualAccountInput): Promise<BlindpayApiResponse<CreateVirtualAccountResponse>> {
-            return client.post(`/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`, body);
+            return client.post(
+                `/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`,
+                body
+            );
         },
 
         get({
             instanceId,
             receiverId,
         }: GetVirtualAccountInput): Promise<BlindpayApiResponse<GetVirtualAccountResponse>> {
-            return client.get(
-                `/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`
-            );
+            return client.get(`/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`);
         },
     };
 }

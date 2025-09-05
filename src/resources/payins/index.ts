@@ -21,10 +21,10 @@ export type Payin = {
     status: TransactionStatus;
     payin_quote_id: string;
     instance_id: string;
-    tracking_transaction?: TrackingTransaction
-    tracking_payment?: TrackingPayment
-    tracking_complete?: TrackingComplete
-    tracking_partner_fee?: TrackingPartnerFee
+    tracking_transaction?: TrackingTransaction;
+    tracking_payment?: TrackingPayment;
+    tracking_complete?: TrackingComplete;
+    tracking_partner_fee?: TrackingPartnerFee;
     created_at: string;
     updated_at: string;
     image_url?: string;
@@ -73,7 +73,7 @@ export type Payin = {
             address_line_2: string;
         };
     };
-}
+};
 
 export type ListPayinsInput = {
     instanceId: string;
@@ -81,7 +81,7 @@ export type ListPayinsInput = {
         status?: TransactionStatus;
         receiver_id?: Network;
     };
-}
+};
 
 export type ListPayinsResponse = {
     data: Payin[];
@@ -106,7 +106,7 @@ export type GetPayinInput = {
     id: string;
 };
 
-export type GetPayinResponse = Payin
+export type GetPayinResponse = Payin;
 
 export type GetPayinTrackInput = {
     id: string;
@@ -201,10 +201,10 @@ export type GetPayinTrackResponse = {
 
 export type ExportPayinsInput = {
     instanceId: string;
-    params?: Pick<PaginationParams, 'limit' | 'offset'> & { status: TransactionStatus; };
+    params?: Pick<PaginationParams, "limit" | "offset"> & { status: TransactionStatus };
 };
 
-export type ExportPayinsResponse = Payin[]
+export type ExportPayinsResponse = Payin[];
 
 export type CreateEvmPayinInput = {
     instanceId: string;
@@ -213,19 +213,20 @@ export type CreateEvmPayinInput = {
     };
 };
 
-export type CreateEvmPayinResponse = Pick<Payin, 
-    | 'id' 
-    | 'status' 
-    | 'pix_code' 
-    | 'memo_code' 
-    | 'clabe' 
-    | 'tracking_complete' 
-    | 'tracking_payment' 
-    | 'tracking_transaction' 
-    | 'tracking_partner_fee' 
-    | 'blindpay_bank_details' 
-    | 'receiver_id' 
-    | 'receiver_amount'
+export type CreateEvmPayinResponse = Pick<
+    Payin,
+    | "id"
+    | "status"
+    | "pix_code"
+    | "memo_code"
+    | "clabe"
+    | "tracking_complete"
+    | "tracking_payment"
+    | "tracking_transaction"
+    | "tracking_partner_fee"
+    | "blindpay_bank_details"
+    | "receiver_id"
+    | "receiver_amount"
 >;
 
 export function createPayinsResource(client: InternalApiClient) {
@@ -243,11 +244,17 @@ export function createPayinsResource(client: InternalApiClient) {
         getTrack({ id }: GetPayinTrackInput): Promise<BlindpayApiResponse<GetPayinTrackResponse>> {
             return client.get(`/e/payins/${id}`);
         },
-        export({ instanceId, params }: ExportPayinsInput): Promise<BlindpayApiResponse<ExportPayinsResponse>> {
+        export({
+            instanceId,
+            params,
+        }: ExportPayinsInput): Promise<BlindpayApiResponse<ExportPayinsResponse>> {
             const queryParams = params ? `?${new URLSearchParams(params)}` : "";
             return client.get(`/instances/${instanceId}/export/payins${queryParams}`);
         },
-        createEvm({ instanceId, body }: CreateEvmPayinInput): Promise<BlindpayApiResponse<CreateEvmPayinResponse>> {
+        createEvm({
+            instanceId,
+            body,
+        }: CreateEvmPayinInput): Promise<BlindpayApiResponse<CreateEvmPayinResponse>> {
             return client.post(`/instances/${instanceId}/payins/evm`, body);
         },
     };

@@ -55,7 +55,7 @@ export type GetFxRateInput = {
         from: Currency;
         to: Currency;
         request_amount: number;
-    }
+    };
 };
 
 export type GetFxRateResponse = {
@@ -68,11 +68,17 @@ export type GetFxRateResponse = {
 
 export function createPayoutsResource(client: InternalApiClient) {
     return {
-        create({ instanceId, body }: CreateQuoteInput): Promise<BlindpayApiResponse<CreateQuoteResponse>> {
+        create({
+            instanceId,
+            body,
+        }: CreateQuoteInput): Promise<BlindpayApiResponse<CreateQuoteResponse>> {
             return client.post(`/instances/${instanceId}/quotes`, body);
         },
 
-        getFxRate({ instanceId, body }: GetFxRateInput): Promise<BlindpayApiResponse<GetFxRateResponse>> {
+        getFxRate({
+            instanceId,
+            body,
+        }: GetFxRateInput): Promise<BlindpayApiResponse<GetFxRateResponse>> {
             return client.post(`/instances/${instanceId}/quotes/fx`, body);
         },
     };

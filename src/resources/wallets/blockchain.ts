@@ -1,7 +1,4 @@
-import type {
-    BlindpayApiResponse,
-    Network,
-} from "../../../types";
+import type { BlindpayApiResponse, Network } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
 export type BlockchainWallet = {
@@ -12,16 +9,16 @@ export type BlockchainWallet = {
     signature_tx_hash?: string;
     is_account_abstraction: boolean;
     receiver_id: string;
-}
+};
 
 export type GetBlockchainWalletMessage = {
     receiverId: string;
     instanceId: string;
-}
+};
 
 export type GetBlockchainWalletMessageResponse = {
     message: string;
-}
+};
 
 export type ListBlockchainWalletsInput = {
     instanceId: string;
@@ -56,9 +53,9 @@ export type DeleteBlockchainWalletInput = {
     id: string;
 };
 
-export type GetBlockchainWalletResponse = BlockchainWallet
+export type GetBlockchainWalletResponse = BlockchainWallet;
 
-export type CreateBlockchainWalletResponse = BlockchainWallet
+export type CreateBlockchainWalletResponse = BlockchainWallet;
 
 export type CreateAssetTrustlineInput = {
     instanceId: string;
@@ -69,7 +66,7 @@ export type CreateAssetTrustlineInput = {
 
 export type CreateAssetTrustlineResponse = {
     xdr: string;
-}
+};
 
 export type MintUsdbStellarInput = {
     instanceId: string;
@@ -84,7 +81,7 @@ export function createBlockchainWalletsResource(client: InternalApiClient) {
     return {
         list({
             instanceId,
-            receiverId
+            receiverId,
         }: ListBlockchainWalletsInput): Promise<
             BlindpayApiResponse<ListBlockchainWalletsResponse>
         > {
@@ -95,41 +92,48 @@ export function createBlockchainWalletsResource(client: InternalApiClient) {
         create({
             instanceId,
             body,
-        }: CreateBlockchainWalletInput): Promise<BlindpayApiResponse<CreateBlockchainWalletResponse>> {
-            return client.post(
-                `/instances/${instanceId}/blockchain-wallets`,
-                body
-            );
+        }: CreateBlockchainWalletInput): Promise<
+            BlindpayApiResponse<CreateBlockchainWalletResponse>
+        > {
+            return client.post(`/instances/${instanceId}/blockchain-wallets`, body);
         },
         getWalletMessage({
             receiverId,
             instanceId,
-        }: GetBlockchainWalletMessage): Promise<BlindpayApiResponse<GetBlockchainWalletMessageResponse>> {
-            return client.get(`/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets/sign-message`);
+        }: GetBlockchainWalletMessage): Promise<
+            BlindpayApiResponse<GetBlockchainWalletMessageResponse>
+        > {
+            return client.get(
+                `/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets/sign-message`
+            );
         },
         get({
             instanceId,
             receiverId,
             id,
         }: GetBlockchainWalletInput): Promise<BlindpayApiResponse<BlockchainWallet>> {
-            return client.get(`/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets/${id}`);
+            return client.get(
+                `/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets/${id}`
+            );
         },
         delete({
             instanceId,
             receiverId,
             id,
         }: DeleteBlockchainWalletInput): Promise<BlindpayApiResponse<void>> {
-            return client.delete(`/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets/${id}`);
+            return client.delete(
+                `/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets/${id}`
+            );
         },
         createAssetTrustline({
             instanceId,
-            body
+            body,
         }: CreateAssetTrustlineInput): Promise<BlindpayApiResponse<CreateAssetTrustlineResponse>> {
             return client.post(`/instances/${instanceId}/create-asset-trustline`, body);
         },
         mintUsdbStellar({
             instanceId,
-            body
+            body,
         }: MintUsdbStellarInput): Promise<BlindpayApiResponse<void>> {
             return client.post(`/instances/${instanceId}/mint-usdb-stellar`, body);
         },

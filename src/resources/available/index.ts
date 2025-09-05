@@ -1,22 +1,19 @@
-import type {
-    BlindpayApiResponse,
-    Rail,
-} from "../../../types";
+import type { BlindpayApiResponse, Rail } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
 export type GetBankDetailsResponse = {
     items: Array<{
         label: string;
         value: string;
-        is_active: boolean
-    }>
-}
+        is_active: boolean;
+    }>;
+};
 
 export type GetRailsResponse = Array<{
     label: string;
     value: Rail;
     country: boolean;
-}>
+}>;
 
 export function createAvailableResource(client: InternalApiClient) {
     return {
@@ -24,7 +21,7 @@ export function createAvailableResource(client: InternalApiClient) {
             return client.get(`/available/bank-details?rail=${rail}`);
         },
         getRails(): Promise<BlindpayApiResponse<GetRailsResponse>> {
-            return client.get('/available/rails');
+            return client.get("/available/rails");
         },
     };
 }

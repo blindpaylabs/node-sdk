@@ -67,7 +67,7 @@ export type ListBankAccountsResponse = {
         offramp_wallets?: Array<{
             address: string;
             id: string;
-            network: 'tron';
+            network: "tron";
             external_id: string;
         }>;
         created_at: string;
@@ -102,7 +102,7 @@ export type CreateBankAccountInput = {
         ach_cop_beneficiary_first_name: string;
         ach_cop_beneficiary_last_name: string;
         ach_cop_document_id: string;
-        ach_cop_document_type: AchCopDocumentType
+        ach_cop_document_type: AchCopDocumentType;
         ach_cop_email: string;
         ach_cop_bank_code: string;
         ach_cop_bank_account: string;
@@ -183,7 +183,7 @@ export type CreateBankAccountResponse = {
     offramp_wallets?: Array<{
         address: string;
         id: string;
-        network: 'tron';
+        network: "tron";
         external_id: string;
     }>;
     created_at: string;
@@ -208,7 +208,7 @@ export type GetBankAccountResponse = {
     is_primary: boolean;
     created_at: string;
     updated_at: string;
-}
+};
 
 export type DeleteBankAccountInput = {
     instanceId: string;
@@ -222,9 +222,7 @@ export function createBankAccountsResource(client: InternalApiClient) {
             instanceId,
             receiverId,
         }: ListBankAccountsInput): Promise<BlindpayApiResponse<ListBankAccountsResponse>> {
-            return client.get(
-                `/instances/${instanceId}/receivers/${receiverId}/bank-accounts`
-            );
+            return client.get(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`);
         },
         create({
             instanceId,

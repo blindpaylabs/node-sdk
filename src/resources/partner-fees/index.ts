@@ -1,6 +1,4 @@
-import type {
-    BlindpayApiResponse,
-} from "../../../types";
+import type { BlindpayApiResponse } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
 export type PartnerFee = {
@@ -18,11 +16,11 @@ export type ListPartnerFeesInput = {
     instanceId: string;
 };
 
-export type ListPartnerFeesResponse = PartnerFee[]
+export type ListPartnerFeesResponse = PartnerFee[];
 
 export type CreatePartnerFeeInput = {
     instanceId: string;
-    body: PartnerFee
+    body: PartnerFee;
 };
 
 export type CreatePartnerFeeResponse = {
@@ -35,15 +33,14 @@ export type CreatePartnerFeeResponse = {
     payin_flat_fee: number;
     evm_wallet_address?: string;
     stellar_wallet_address?: string;
-}
+};
 
 export type GetPartnerFeeInput = {
     instanceId: string;
     id: string;
 };
 
-export type GetPartnerFeeResponse = PartnerFee
-
+export type GetPartnerFeeResponse = PartnerFee;
 
 export type DeletePartnerFeeInput = {
     instanceId: string;
@@ -55,9 +52,7 @@ export function createPartnerFeesResource(client: InternalApiClient) {
         list({
             instanceId,
         }: ListPartnerFeesInput): Promise<BlindpayApiResponse<ListPartnerFeesResponse>> {
-            return client.get(
-                `/instances/${instanceId}/partner-fees`
-            );
+            return client.get(`/instances/${instanceId}/partner-fees`);
         },
         create({
             instanceId,
@@ -71,10 +66,7 @@ export function createPartnerFeesResource(client: InternalApiClient) {
         }: GetPartnerFeeInput): Promise<BlindpayApiResponse<GetPartnerFeeResponse>> {
             return client.get(`/instances/${instanceId}/partner-fees/${id}`);
         },
-        delete({
-            instanceId,
-            id,
-        }: DeletePartnerFeeInput): Promise<BlindpayApiResponse<void>> {
+        delete({ instanceId, id }: DeletePartnerFeeInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/partner-fees/${id}`);
         },
     };

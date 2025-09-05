@@ -26,7 +26,7 @@ export class Blindpay {
     // Resources
     readonly available: ReturnType<typeof createAvailableResource>;
     readonly partnerFees: ReturnType<typeof createPartnerFeesResource>;
-    readonly payins: ReturnType<typeof createPayinsResource> 
+    readonly payins: ReturnType<typeof createPayinsResource>;
     readonly quotes: ReturnType<typeof createQuoteResource>;
     readonly payouts: ReturnType<typeof createPayoutsResource>;
     readonly virtualAccounts: ReturnType<typeof createVirtualAccountsResource>;
@@ -80,7 +80,7 @@ export class Blindpay {
         };
 
         this.quotes = createQuoteResource(this.api);
-        
+
         this.payouts = createPayoutsResource(this.api);
 
         this.receivers = {

@@ -1,15 +1,26 @@
-import type {
-    AccountClass,
-    BlindpayApiResponse,
-    Country,
-} from "../../../types";
+import type { AccountClass, BlindpayApiResponse, Country } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type ProofOfAddressDocType = "UTILITY_BILL" | "BANK_STATEMENT" | "RENTAL_AGREEMENT" | "TAX_DOCUMENT" | "GOVERNMENT_CORRESPONDENCE";
-export type PurposeOfTransactions = "business_transactions" | "charitable_donations" | "investment_purposes" | "payments_to_friends_or_family_abroad" | "personal_or_living_expenses";
-export type SourceOfFundsDocType = "business_income" | "gambling_proceeds" | "gifts" | "government_benefits" | "inheritance";
+export type ProofOfAddressDocType =
+    | "UTILITY_BILL"
+    | "BANK_STATEMENT"
+    | "RENTAL_AGREEMENT"
+    | "TAX_DOCUMENT"
+    | "GOVERNMENT_CORRESPONDENCE";
+export type PurposeOfTransactions =
+    | "business_transactions"
+    | "charitable_donations"
+    | "investment_purposes"
+    | "payments_to_friends_or_family_abroad"
+    | "personal_or_living_expenses";
+export type SourceOfFundsDocType =
+    | "business_income"
+    | "gambling_proceeds"
+    | "gifts"
+    | "government_benefits"
+    | "inheritance";
 
-export type IdentificationDocument = "PASSPORT" | "ID_CARD" | "DRIVERS"
+export type IdentificationDocument = "PASSPORT" | "ID_CARD" | "DRIVERS";
 
 export type KycType = "light" | "standard" | "enhanced";
 
@@ -70,20 +81,23 @@ export type Receiver = {
     alternate_name: string;
     formation_date: string;
     website: string;
-    owners: Array<{ id: string } & Pick<Owner, 
-    | "first_name" 
-    | "last_name"
-    | "address_line_1"
-    | "address_line_2"
-    | "city"
-    | "state_province_region"
-    | "country"
-    | "postal_code"
-    | "id_doc_country"
-    | "id_doc_type"
-    | "id_doc_front_file"
-    | "id_doc_back_file"
-    >>
+    owners: Array<
+        { id: string } & Pick<
+            Owner,
+            | "first_name"
+            | "last_name"
+            | "address_line_1"
+            | "address_line_2"
+            | "city"
+            | "state_province_region"
+            | "country"
+            | "postal_code"
+            | "id_doc_country"
+            | "id_doc_type"
+            | "id_doc_front_file"
+            | "id_doc_back_file"
+        >
+    >;
     incorporation_doc_file: string;
     proof_of_ownership_doc_file: string;
     source_of_funds_doc_type: SourceOfFundsDocType;
@@ -102,13 +116,13 @@ export type Receiver = {
         daily: number;
         monthly: number;
     };
-}
+};
 
 export type ListReceiversInput = {
     instanceId: string;
 };
 
-export type ListReceiversResponse = Array<Receiver>
+export type ListReceiversResponse = Array<Receiver>;
 
 export type CreateReceiverInput = {
     instanceId: string;
@@ -137,7 +151,7 @@ export type CreateReceiverInput = {
         incorporation_doc_file: string;
         individual_holding_doc_front_file: string;
         last_name: string;
-        legal_name: string; 
+        legal_name: string;
         owners: Owner[];
         phone_number: string;
         proof_of_address_doc_file: string;
@@ -154,14 +168,14 @@ export type CreateReceiverInput = {
 
 export type CreateReceiverResponse = {
     id: string;
-}
+};
 
 export type GetReceiverInput = {
     instanceId: string;
     id: string;
 };
 
-export type GetReceiverResponse = Receiver
+export type GetReceiverResponse = Receiver;
 
 export type UpdateReceiverInput = {
     instanceId: string;
@@ -191,23 +205,26 @@ export type UpdateReceiverInput = {
         alternate_name?: string;
         formation_date?: string;
         website?: string;
-        owners?: Array<{ id: string } & Pick<Owner, 
-        | "first_name" 
-        | "last_name"
-        | "role"
-        | "date_of_birth"
-        | "tax_id"
-        | "address_line_1"
-        | "address_line_2"
-        | "city"
-        | "state_province_region"
-        | "country"
-        | "postal_code"
-        | "id_doc_country"
-        | "id_doc_type"
-        | "id_doc_front_file"
-        | "id_doc_back_file"
-        >>;
+        owners?: Array<
+            { id: string } & Pick<
+                Owner,
+                | "first_name"
+                | "last_name"
+                | "role"
+                | "date_of_birth"
+                | "tax_id"
+                | "address_line_1"
+                | "address_line_2"
+                | "city"
+                | "state_province_region"
+                | "country"
+                | "postal_code"
+                | "id_doc_country"
+                | "id_doc_type"
+                | "id_doc_front_file"
+                | "id_doc_back_file"
+            >
+        >;
         incorporation_doc_file?: string;
         proof_of_ownership_doc_file?: string;
         source_of_funds_doc_type?: SourceOfFundsDocType;
@@ -232,22 +249,21 @@ export function createReceiversResource(client: InternalApiClient) {
         list({
             instanceId,
         }: ListReceiversInput): Promise<BlindpayApiResponse<ListReceiversResponse>> {
-            return client.get(
-                `/instances/${instanceId}/receivers`
-            );
+            return client.get(`/instances/${instanceId}/receivers`);
         },
-        create({ instanceId, body }: CreateReceiverInput): Promise<BlindpayApiResponse<CreateReceiverResponse>> {
+        create({
+            instanceId,
+            body,
+        }: CreateReceiverInput): Promise<BlindpayApiResponse<CreateReceiverResponse>> {
             return client.post(`/instances/${instanceId}/receivers`, body);
         },
-
-        get({ instanceId, id }: GetReceiverInput): Promise<BlindpayApiResponse<GetReceiverResponse>> {
-            return client.get(`/instances/${instanceId}/receivers/${id}`);
-        },
-        update({
+        get({
             instanceId,
             id,
-            body,
-        }: UpdateReceiverInput): Promise<BlindpayApiResponse<void>> {
+        }: GetReceiverInput): Promise<BlindpayApiResponse<GetReceiverResponse>> {
+            return client.get(`/instances/${instanceId}/receivers/${id}`);
+        },
+        update({ instanceId, id, body }: UpdateReceiverInput): Promise<BlindpayApiResponse<void>> {
             return client.patch(`/instances/${instanceId}/receivers/${id}`, body);
         },
         delete({ instanceId, id }: DeleteReceiverInput): Promise<BlindpayApiResponse<void>> {

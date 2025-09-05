@@ -16,7 +16,7 @@ export type CreateQuoteInput = {
         network: Network;
         request_amount: number;
         token: StablecoinToken;
-        cover_fees: boolean
+        cover_fees: boolean;
         description: string | null;
         partner_fee_id: string | null;
         transaction_document_file: string | null;
@@ -38,7 +38,7 @@ export type CreateQuoteResponse = {
         abi: Record<string, unknown>;
     };
     address: string;
-    functionName: "approve"; 
+    functionName: "approve";
     blindpayContractAddress: string;
     amount: string;
     network: {
@@ -59,12 +59,12 @@ export type GetFxRateResponse = {
 export type GetFxRateInput = {
     instanceId: string;
     body: {
-        currency: CurrencyType
-        from: Currency,
-        to: Currency,
+        currency: CurrencyType;
+        from: Currency;
+        to: Currency;
         request_amount: number;
-    }
-}
+    };
+};
 
 export function createQuoteResource(client: InternalApiClient) {
     return {
