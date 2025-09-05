@@ -42,7 +42,7 @@
         "build": "tsup src",
         "check": "biome check .",
         "format:check": "biome format .",
-        "lint:fix": "biome lint --write .",
+        "lint:fix": "biome lint --write ."
     },
     "exports": {
         "types": "./types/index.d.ts"
