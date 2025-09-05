@@ -46,28 +46,6 @@ export type DeleteApiKeyInput = {
     id: string;
 };
 
-export type InitiateTosInput = {
-    instanceId: string;
-    body: {
-        idempotency_key: string;
-    };
-};
-
-export type InitiateTosResponse = {
-    url: string;
-};
-
-export type AcceptTosInput = {
-    body: {
-        idempotency_key: string;
-        session_token: string;
-    };
-};
-
-export type AcceptTosResponse = {
-    tos_id: string;
-};
-
 export function createApiKeysResource(client: InternalApiClient) {
     return {
         list({ instanceId }: ListApiKeysInput): Promise<BlindpayApiResponse<ListApiKeysResponse>> {
@@ -84,15 +62,6 @@ export function createApiKeysResource(client: InternalApiClient) {
         },
         delete({ instanceId, id }: DeleteApiKeyInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/api-keys/${id}`);
-        },
-        initiateTos({
-            instanceId,
-            body,
-        }: InitiateTosInput): Promise<BlindpayApiResponse<InitiateTosResponse>> {
-            return client.post(`/e/instances/${instanceId}/tos`, body);
-        },
-        acceptTos({ body }: AcceptTosInput): Promise<BlindpayApiResponse<AcceptTosResponse>> {
-            return client.put(`/e/tos`, body);
         },
     };
 }
