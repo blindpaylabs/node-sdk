@@ -16,7 +16,7 @@ export type CreateQuoteInput = {
         network: Network;
         request_amount: number;
         token: StablecoinToken;
-        cover_fees: boolean | null; // TODO: figure out what's the default value
+        cover_fees: boolean
         description: string | null;
         partner_fee_id: string | null;
         transaction_document_file: string | null;

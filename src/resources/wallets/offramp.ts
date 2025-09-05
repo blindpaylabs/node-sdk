@@ -1,8 +1,19 @@
 import type {
     BlindpayApiResponse,
-    OfframpWallet,
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
+
+export type OfframpWallet = {
+    id: string;
+    external_id: string;
+    instance_id: string;
+    receiver_id: string;
+    bank_account_id: string;
+    network: 'tron';
+    address: string;
+    created_at: string;
+    updated_at: string;
+}
 
 export type ListOfframpWalletsInput = {
     instanceId: string;
@@ -36,6 +47,8 @@ export type GetOfframpWalletInput = {
     id: string;
 };
 
+export type GetOfframpWalletResponse = OfframpWallet
+
 export function createOfframpWalletsResource(client: InternalApiClient) {
     return {
         list({
@@ -58,7 +71,7 @@ export function createOfframpWalletsResource(client: InternalApiClient) {
             instanceId,
             bankAccountId,
             id,
-        }: GetOfframpWalletInput): Promise<BlindpayApiResponse<OfframpWallet>> {
+        }: GetOfframpWalletInput): Promise<BlindpayApiResponse<GetOfframpWalletResponse>> {
             return client.get(
                 `/instances/${instanceId}/receivers/${receiverId}/bank-accounts/${bankAccountId}/offramp_wallets/${id}`
             );

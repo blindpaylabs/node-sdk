@@ -1,97 +1,81 @@
 import type {
     BlindpayApiResponse,
-    PaginationMetadata,
-    PaginationParams,
-    PartnerFee,
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type ListPartnerFeesInput = {
-    instanceId: string;
-    params?: PaginationParams;
+export type PartnerFee = {
+    evm_wallet_address: string;
+    name: string;
+    payin_flat_fee: number;
+    payin_percentage_fee: number;
+    payout_flat_fee: number;
+    payout_percentage_fee: number;
+    stellar_wallet_address?: string | null;
+    virtual_account_set?: boolean | null;
 };
 
-export type ListPartnerFeesResponse = {
-    data: PartnerFee[];
-    metadata: PaginationMetadata;
+export type ListPartnerFeesInput = {
+    instanceId: string;
 };
+
+export type ListPartnerFeesResponse = PartnerFee[]
 
 export type CreatePartnerFeeInput = {
     instanceId: string;
-    body: {
-        name: string;
-        percentage?: number | null;
-        fixed_amount?: number | null;
-        min_amount?: number | null;
-        max_amount?: number | null;
-    };
+    body: PartnerFee
 };
+
+export type CreatePartnerFeeResponse = {
+    id: string;
+    instance_id: string;
+    name: string;
+    payout_percentage_fee: number;
+    payout_flat_fee: number;
+    payin_percentage_fee: number;
+    payin_flat_fee: number;
+    evm_wallet_address?: string;
+    stellar_wallet_address?: string;
+}
 
 export type GetPartnerFeeInput = {
     instanceId: string;
-    partnerFeeId: string;
+    id: string;
 };
 
-export type UpdatePartnerFeeInput = {
-    instanceId: string;
-    partnerFeeId: string;
-    body: {
-        name?: string;
-        percentage?: number | null;
-        fixed_amount?: number | null;
-        min_amount?: number | null;
-        max_amount?: number | null;
-        is_active?: boolean;
-    };
-};
+export type GetPartnerFeeResponse = PartnerFee
+
 
 export type DeletePartnerFeeInput = {
     instanceId: string;
-    partnerFeeId: string;
+    id: string;
 };
 
 export function createPartnerFeesResource(client: InternalApiClient) {
     return {
         list({
             instanceId,
-            params,
         }: ListPartnerFeesInput): Promise<BlindpayApiResponse<ListPartnerFeesResponse>> {
-            const queryParams = params ? `?${new URLSearchParams(params).toString()}` : "";
-            return client.get<ListPartnerFeesResponse>(
-                `/instances/${instanceId}/partner_fees${queryParams}`
+            return client.get(
+                `/instances/${instanceId}/partner-fees`
             );
         },
-
         create({
             instanceId,
             body,
-        }: CreatePartnerFeeInput): Promise<BlindpayApiResponse<PartnerFee>> {
-            return client.post<PartnerFee>(`/instances/${instanceId}/partner_fees`, body);
+        }: CreatePartnerFeeInput): Promise<BlindpayApiResponse<CreatePartnerFeeResponse>> {
+            return client.post(`/instances/${instanceId}/partner-fees`, body);
         },
-
         get({
             instanceId,
-            partnerFeeId,
-        }: GetPartnerFeeInput): Promise<BlindpayApiResponse<PartnerFee>> {
-            return client.get<PartnerFee>(`/instances/${instanceId}/partner_fees/${partnerFeeId}`);
+            id,
+        }: GetPartnerFeeInput): Promise<BlindpayApiResponse<GetPartnerFeeResponse>> {
+            return client.get(`/instances/${instanceId}/partner-fees/${id}`);
         },
-
-        update({
-            instanceId,
-            partnerFeeId,
-            body,
-        }: UpdatePartnerFeeInput): Promise<BlindpayApiResponse<PartnerFee>> {
-            return client.patch<PartnerFee>(
-                `/instances/${instanceId}/partner_fees/${partnerFeeId}`,
-                body
-            );
-        },
-
         delete({
             instanceId,
-            partnerFeeId,
+            id,
         }: DeletePartnerFeeInput): Promise<BlindpayApiResponse<void>> {
-            return client.delete<void>(`/instances/${instanceId}/partner_fees/${partnerFeeId}`);
+            return client.delete(`/instances/${instanceId}/partner-fees/${id}`);
         },
     };
 }

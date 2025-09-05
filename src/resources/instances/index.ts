@@ -1,61 +1,73 @@
 import type {
     BlindpayApiResponse,
-    Instance,
-    PaginationMetadata,
-    PaginationParams,
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type ListInstancesInput = {
-    params?: PaginationParams;
-};
+export type InstanceMemberRole = 
+    | "owner"
+    | "admin"
+    | "finance"
+    | "checker"
+    | "operations"
+    | "developer"
+    | "viewer";
 
-export type ListInstancesResponse = {
-    data: Instance[];
-    metadata: PaginationMetadata;
-};
-
-export type CreateInstanceInput = {
-    body: {
-        name: string;
-        description?: string | null;
-        webhook_url?: string | null;
-    };
-};
-
-export type GetInstanceInput = {
+export type GetInstanceMembersInput = {
     instanceId: string;
 };
+
+export type GetInstanceMembersResponse = Array<{
+    id: string;
+    email: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    image_url: string;
+    created_at: string;
+    role: InstanceMemberRole; 
+}>;
 
 export type UpdateInstanceInput = {
     instanceId: string;
     body: {
-        name?: string;
-        description?: string | null;
-        webhook_url?: string | null;
-        is_active?: boolean;
+        name: string;
+        receiver_invite_redirect_urL?: string;
+    };
+};
+
+export type DeleteInstanceInput = {
+    instanceId: string;
+};
+
+export type DeleteInstanceMemberInput = {
+    instanceId: string;
+    id: string;
+};
+
+export type UpdateInstanceMemberRoleInput = {
+    instanceId: string;
+    id: string;
+    body: {
+        role: InstanceMemberRole;
     };
 };
 
 export function createInstancesResource(client: InternalApiClient) {
     return {
-        list({
-            params,
-        }: ListInstancesInput = {}): Promise<BlindpayApiResponse<ListInstancesResponse>> {
-            const queryParams = params ? `?${new URLSearchParams(params).toString()}` : "";
-            return client.get<ListInstancesResponse>(`/instances${queryParams}`);
+        getMembers({ instanceId }: GetInstanceMembersInput): Promise<BlindpayApiResponse<GetInstanceMembersResponse>> {
+            return client.get(`/instances/${instanceId}/members`);
         },
-
-        create({ body }: CreateInstanceInput): Promise<BlindpayApiResponse<Instance>> {
-            return client.post<Instance>(`/instances`, body);
+        update({ instanceId, body }: UpdateInstanceInput): Promise<BlindpayApiResponse<void>> {
+            return client.put(`/instances/${instanceId}`, body);
         },
-
-        get({ instanceId }: GetInstanceInput): Promise<BlindpayApiResponse<Instance>> {
-            return client.get<Instance>(`/instances/${instanceId}`);
+        delete({ instanceId }: DeleteInstanceInput): Promise<BlindpayApiResponse<void>> {
+            return client.delete(`/instances/${instanceId}`);
         },
-
-        update({ instanceId, body }: UpdateInstanceInput): Promise<BlindpayApiResponse<Instance>> {
-            return client.patch<Instance>(`/instances/${instanceId}`, body);
+        deleteMember({ instanceId, id }: DeleteInstanceMemberInput): Promise<BlindpayApiResponse<void>> {
+            return client.delete(`/instances/${instanceId}/members/${id}`);
+        },
+        updateMemberRole({ instanceId, id, body }: UpdateInstanceMemberRoleInput): Promise<BlindpayApiResponse<void>> {
+            return client.put(`/instances/${instanceId}/members/${id}`, body);
         },
     };
 }

@@ -1,60 +1,98 @@
 import type {
-    ApiKey,
     BlindpayApiResponse,
-    PaginationMetadata,
-    PaginationParams,
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
+type ApiKey = {
+    id: string;
+    name: string;
+    permission: "full_access";
+    token: string;
+    ip_whitelist?: string[];
+    unkey_id: string;
+    last_used_at: string | null;
+    instance_id: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export type ListApiKeysInput = {
     instanceId: string;
-    params?: PaginationParams;
 };
 
-export type ListApiKeysResponse = {
-    data: ApiKey[];
-    metadata: PaginationMetadata;
-};
+export type ListApiKeysResponse = ApiKey[]
 
 export type CreateApiKeyInput = {
     instanceId: string;
     body: {
         name: string;
+        permission: "full_access";
+        ip_whitelist?: string[];
     };
 };
 
+export type CreateApiKeyResponse = {
+    id: string;
+    token: string;
+}
+
 export type GetApiKeyInput = {
     instanceId: string;
-    apiKeyId: string;
+    id: string;
 };
+
+export type GetApiKeyResponse = ApiKey
 
 export type DeleteApiKeyInput = {
     instanceId: string;
-    apiKeyId: string;
+    id: string;
+};
+
+export type InitiateTosInput = {
+    instanceId: string;
+    body: {
+        idempotency_key: string;
+    }
+};
+
+export type InitiateTosResponse = {
+    url: string;
+}
+
+export type AcceptTosInput = {
+    body: {
+    idempotency_key: string;
+        session_token: string;
+    }
+};
+
+export type AcceptTosResponse = {
+    tos_id: string;
 };
 
 export function createApiKeysResource(client: InternalApiClient) {
     return {
         list({
             instanceId,
-            params,
         }: ListApiKeysInput): Promise<BlindpayApiResponse<ListApiKeysResponse>> {
-            const queryParams = params ? `?${new URLSearchParams(params).toString()}` : "";
             return client.get<ListApiKeysResponse>(
-                `/instances/${instanceId}/api_keys${queryParams}`
+                `/instances/${instanceId}/api-keys`
             );
         },
-
-        create({ instanceId, body }: CreateApiKeyInput): Promise<BlindpayApiResponse<ApiKey>> {
-            return client.post<ApiKey>(`/instances/${instanceId}/api_keys`, body);
+        create({ instanceId, body }: CreateApiKeyInput): Promise<BlindpayApiResponse<CreateApiKeyResponse>> {
+            return client.post(`/instances/${instanceId}/api-keys`, body);
         },
-
-        get({ instanceId, apiKeyId }: GetApiKeyInput): Promise<BlindpayApiResponse<ApiKey>> {
-            return client.get<ApiKey>(`/instances/${instanceId}/api_keys/${apiKeyId}`);
+        get({ instanceId, id }: GetApiKeyInput): Promise<BlindpayApiResponse<GetApiKeyResponse>> {
+            return client.get(`/instances/${instanceId}/api_keys/${id}`);
         },
-
-        delete({ instanceId, apiKeyId }: DeleteApiKeyInput): Promise<BlindpayApiResponse<void>> {
-            return client.delete<void>(`/instances/${instanceId}/api_keys/${apiKeyId}`);
+        delete({ instanceId, id }: DeleteApiKeyInput): Promise<BlindpayApiResponse<void>> {
+            return client.delete(`/instances/${instanceId}/api-keys/${id}`);
+        },
+        initiateTos({ instanceId, body }: InitiateTosInput): Promise<BlindpayApiResponse<InitiateTosResponse>> {
+            return client.post(`/e/instances/${instanceId}/tos`, body);
+        },
+        acceptTos({ body }: AcceptTosInput): Promise<BlindpayApiResponse<AcceptTosResponse>> {
+            return client.put(`/e/tos`, body);
         },
     };
 }

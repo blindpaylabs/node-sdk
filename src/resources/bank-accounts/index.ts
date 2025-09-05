@@ -1,7 +1,5 @@
 import type {
     AccountClass,
-    AchCopDocumentType,
-    BankAccount,
     BankAccountType,
     BlindpayApiResponse,
     Country,
@@ -13,6 +11,8 @@ export type ListBankAccountsInput = {
     instanceId: string;
     receiverId: string;
 };
+
+export type AchCopDocumentType = "CC" | "CE" | "NIT" | "PASS" | "PEP";
 
 export type ListBankAccountsResponse = {
     data: Array<{
@@ -74,7 +74,6 @@ export type ListBankAccountsResponse = {
     }>;
 };
 
-// TODO: this probably should be a union of objects
 export type CreateBankAccountInput = {
     instanceId: string;
     receiverId: string;
@@ -196,6 +195,21 @@ export type GetBankAccountInput = {
     id: string;
 };
 
+export type GetBankAccountResponse = {
+    id: string;
+    receiver_id: string;
+    account_holder_name: string;
+    account_number: string;
+    routing_number: string;
+    account_type: BankAccountType;
+    bank_name: string;
+    swift_code?: string | null;
+    iban?: string | null;
+    is_primary: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
 export type DeleteBankAccountInput = {
     instanceId: string;
     receiverId: string;
@@ -226,7 +240,7 @@ export function createBankAccountsResource(client: InternalApiClient) {
             instanceId,
             receiverId,
             id,
-        }: GetBankAccountInput): Promise<BlindpayApiResponse<BankAccount>> {
+        }: GetBankAccountInput): Promise<BlindpayApiResponse<GetBankAccountResponse>> {
             return client.get(
                 `/instances/${instanceId}/receivers/${receiverId}/bank-accounts/${id}`
             );
