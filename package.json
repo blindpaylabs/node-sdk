@@ -1,6 +1,6 @@
 {
     "name": "blindpay-node",
-    "version": "18.5.0",
+    "version": "1.0.0",
     "description": "Blindpay API wrapper",
     "keywords": [
         "blindpay",
