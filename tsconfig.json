@@ -5,6 +5,7 @@
         "declaration": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
+        "stripInternal": true,
         "moduleResolution": "node",
         "noEmit": true,
         "noFallthroughCasesInSwitch": true,
