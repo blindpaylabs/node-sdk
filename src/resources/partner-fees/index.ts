@@ -20,8 +20,7 @@ export type ListPartnerFeesResponse = PartnerFee[];
 
 export type CreatePartnerFeeInput = {
     instanceId: string;
-    body: PartnerFee;
-};
+} & PartnerFee;
 
 export type CreatePartnerFeeResponse = {
     id: string;
@@ -56,9 +55,9 @@ export function createPartnerFeesResource(client: InternalApiClient) {
         },
         create({
             instanceId,
-            body,
+            ...data
         }: CreatePartnerFeeInput): Promise<BlindpayApiResponse<CreatePartnerFeeResponse>> {
-            return client.post(`/instances/${instanceId}/partner-fees`, body);
+            return client.post(`/instances/${instanceId}/partner-fees`, data);
         },
         get({
             instanceId,

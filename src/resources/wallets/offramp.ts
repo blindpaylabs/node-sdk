@@ -25,10 +25,9 @@ export type CreateOfframpWalletInput = {
     receiverId: string;
     instanceId: string;
     bankAccountId: string;
-    body: {
-        external_id: string;
-        network: "tron";
-    };
+
+    external_id: string;
+    network: "tron";
 };
 
 export type CreateOfframpWalletResponse = {
@@ -58,11 +57,11 @@ export function createOfframpWalletsResource(client: InternalApiClient) {
             receiverId,
             instanceId,
             bankAccountId,
-            body,
+            ...data
         }: CreateOfframpWalletInput): Promise<BlindpayApiResponse<CreateOfframpWalletResponse>> {
             return client.post(
                 `/instances/${instanceId}/receivers/${receiverId}/bank-accounts/${bankAccountId}/offramp_wallets`,
-                body
+                data
             );
         },
         get({

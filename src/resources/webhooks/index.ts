@@ -17,10 +17,9 @@ export type WebhookEvents =
 
 export type CreateWebhookEndpointInput = {
     instanceId: string;
-    body: {
-        url: string;
-        events: WebhookEvents[];
-    };
+
+    url: string;
+    events: WebhookEvents[];
 };
 
 export type CreateWebhookEndpointResponse = {
@@ -72,11 +71,11 @@ export function createWebhookEndpointsResource(client: InternalApiClient) {
         },
         create({
             instanceId,
-            body,
+            ...data
         }: CreateWebhookEndpointInput): Promise<
             BlindpayApiResponse<CreateWebhookEndpointResponse>
         > {
-            return client.post(`/instances/${instanceId}/webhook-endpoints`, body);
+            return client.post(`/instances/${instanceId}/webhook-endpoints`, data);
         },
         delete({ instanceId, id }: DeleteWebhookEndpointInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/webhook-endpoints/${id}`);

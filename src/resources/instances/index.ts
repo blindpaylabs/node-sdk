@@ -27,10 +27,9 @@ export type GetInstanceMembersResponse = Array<{
 
 export type UpdateInstanceInput = {
     instanceId: string;
-    body: {
-        name: string;
-        receiver_invite_redirect_urL?: string;
-    };
+
+    name: string;
+    receiver_invite_redirect_urL?: string;
 };
 
 export type DeleteInstanceInput = {
@@ -45,9 +44,8 @@ export type DeleteInstanceMemberInput = {
 export type UpdateInstanceMemberRoleInput = {
     instanceId: string;
     id: string;
-    body: {
-        role: InstanceMemberRole;
-    };
+
+    role: InstanceMemberRole;
 };
 
 export function createInstancesResource(client: InternalApiClient) {
@@ -57,8 +55,8 @@ export function createInstancesResource(client: InternalApiClient) {
         }: GetInstanceMembersInput): Promise<BlindpayApiResponse<GetInstanceMembersResponse>> {
             return client.get(`/instances/${instanceId}/members`);
         },
-        update({ instanceId, body }: UpdateInstanceInput): Promise<BlindpayApiResponse<void>> {
-            return client.put(`/instances/${instanceId}`, body);
+        update({ instanceId, ...data }: UpdateInstanceInput): Promise<BlindpayApiResponse<void>> {
+            return client.put(`/instances/${instanceId}`, data);
         },
         delete({ instanceId }: DeleteInstanceInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}`);
@@ -72,9 +70,9 @@ export function createInstancesResource(client: InternalApiClient) {
         updateMemberRole({
             instanceId,
             id,
-            body,
+            ...data
         }: UpdateInstanceMemberRoleInput): Promise<BlindpayApiResponse<void>> {
-            return client.put(`/instances/${instanceId}/members/${id}`, body);
+            return client.put(`/instances/${instanceId}/members/${id}`, data);
         },
     };
 }

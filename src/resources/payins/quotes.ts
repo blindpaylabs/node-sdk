@@ -10,19 +10,18 @@ import type { InternalApiClient } from "../../internal/api-client";
 
 export type CreateQuoteInput = {
     instanceId: string;
-    body: {
-        bank_account_id: string;
-        currency_type: CurrencyType;
-        network: Network;
-        request_amount: number;
-        token: StablecoinToken;
-        cover_fees: boolean;
-        description: string | null;
-        partner_fee_id: string | null;
-        transaction_document_file: string | null;
-        transaction_document_id: string | null;
-        transaction_document_type: TransactionDocumentType | null;
-    };
+
+    bank_account_id: string;
+    currency_type: CurrencyType;
+    network: Network;
+    request_amount: number;
+    token: StablecoinToken;
+    cover_fees: boolean;
+    description: string | null;
+    partner_fee_id: string | null;
+    transaction_document_file: string | null;
+    transaction_document_id: string | null;
+    transaction_document_type: TransactionDocumentType | null;
 };
 
 export type CreateQuoteResponse = {
@@ -58,27 +57,26 @@ export type GetFxRateResponse = {
 
 export type GetFxRateInput = {
     instanceId: string;
-    body: {
-        currency: CurrencyType;
-        from: Currency;
-        to: Currency;
-        request_amount: number;
-    };
+
+    currency: CurrencyType;
+    from: Currency;
+    to: Currency;
+    request_amount: number;
 };
 
 export function createQuoteResource(client: InternalApiClient) {
     return {
         create({
             instanceId,
-            body,
+            ...data
         }: CreateQuoteInput): Promise<BlindpayApiResponse<CreateQuoteResponse>> {
-            return client.post<CreateQuoteResponse>(`/instances/${instanceId}/payin-quotes`, body);
+            return client.post<CreateQuoteResponse>(`/instances/${instanceId}/payin-quotes`, data);
         },
         getFxRate({
             instanceId,
-            body,
+            ...data
         }: GetFxRateInput): Promise<BlindpayApiResponse<GetFxRateResponse>> {
-            return client.post<GetFxRateResponse>(`/instances/${instanceId}/payin-quotes/fx`, body);
+            return client.post<GetFxRateResponse>(`/instances/${instanceId}/payin-quotes/fx`, data);
         },
     };
 }

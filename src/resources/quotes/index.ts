@@ -10,19 +10,18 @@ import type { InternalApiClient } from "../../internal/api-client";
 
 export type CreateQuoteInput = {
     instanceId: string;
-    body: {
-        bank_account_id: string;
-        currency_type: CurrencyType;
-        network?: Network | null;
-        request_amount: number;
-        token?: StablecoinToken | null;
-        cover_fees: boolean | null;
-        description?: string | null;
-        partner_fee_id: string | null;
-        transaction_document_file: string | null;
-        transaction_document_id: string | null;
-        transaction_document_type: TransactionDocumentType;
-    };
+
+    bank_account_id: string;
+    currency_type: CurrencyType;
+    network?: Network | null;
+    request_amount: number;
+    token?: StablecoinToken | null;
+    cover_fees: boolean | null;
+    description?: string | null;
+    partner_fee_id: string | null;
+    transaction_document_file: string | null;
+    transaction_document_id: string | null;
+    transaction_document_type: TransactionDocumentType;
 };
 export type CreateQuoteResponse = {
     id: string;
@@ -50,12 +49,11 @@ export type CreateQuoteResponse = {
 
 export type GetFxRateInput = {
     instanceId: string;
-    body: {
-        currency_type: CurrencyType;
-        from: Currency;
-        to: Currency;
-        request_amount: number;
-    };
+
+    currency_type: CurrencyType;
+    from: Currency;
+    to: Currency;
+    request_amount: number;
 };
 
 export type GetFxRateResponse = {
@@ -70,16 +68,16 @@ export function createPayoutsResource(client: InternalApiClient) {
     return {
         create({
             instanceId,
-            body,
+            ...data
         }: CreateQuoteInput): Promise<BlindpayApiResponse<CreateQuoteResponse>> {
-            return client.post(`/instances/${instanceId}/quotes`, body);
+            return client.post(`/instances/${instanceId}/quotes`, data);
         },
 
         getFxRate({
             instanceId,
-            body,
+            ...data
         }: GetFxRateInput): Promise<BlindpayApiResponse<GetFxRateResponse>> {
-            return client.post(`/instances/${instanceId}/quotes/fx`, body);
+            return client.post(`/instances/${instanceId}/quotes/fx`, data);
         },
     };
 }

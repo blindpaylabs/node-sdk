@@ -22,11 +22,9 @@ export type ListApiKeysResponse = ApiKey[];
 
 export type CreateApiKeyInput = {
     instanceId: string;
-    body: {
-        name: string;
-        permission: "full_access";
-        ip_whitelist?: string[];
-    };
+    name: string;
+    permission: "full_access";
+    ip_whitelist?: string[];
 };
 
 export type CreateApiKeyResponse = {
@@ -53,9 +51,9 @@ export function createApiKeysResource(client: InternalApiClient) {
         },
         create({
             instanceId,
-            body,
+            ...data
         }: CreateApiKeyInput): Promise<BlindpayApiResponse<CreateApiKeyResponse>> {
-            return client.post(`/instances/${instanceId}/api-keys`, body);
+            return client.post(`/instances/${instanceId}/api-keys`, data);
         },
         get({ instanceId, id }: GetApiKeyInput): Promise<BlindpayApiResponse<GetApiKeyResponse>> {
             return client.get(`/instances/${instanceId}/api_keys/${id}`);

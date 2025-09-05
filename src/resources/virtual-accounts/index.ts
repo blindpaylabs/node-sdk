@@ -36,10 +36,9 @@ export type VirtualAccount = {
 export type CreateVirtualAccountInput = {
     instanceId: string;
     receiverId: string;
-    body: {
-        blockchain_wallet_id: string;
-        token: StablecoinToken;
-    };
+
+    blockchain_wallet_id: string;
+    token: StablecoinToken;
 };
 
 export type CreateVirtualAccountResponse = VirtualAccount;
@@ -54,10 +53,9 @@ export type GetVirtualAccountResponse = VirtualAccount;
 export type UpdateVirtualAccountInput = {
     instanceId: string;
     receiverId: string;
-    body: {
-        blockchain_wallet_id: string;
-        token: StablecoinToken;
-    };
+
+    blockchain_wallet_id: string;
+    token: StablecoinToken;
 };
 
 export function createVirtualAccountsResource(client: InternalApiClient) {
@@ -65,21 +63,21 @@ export function createVirtualAccountsResource(client: InternalApiClient) {
         update({
             instanceId,
             receiverId,
-            body,
+            ...data
         }: UpdateVirtualAccountInput): Promise<BlindpayApiResponse<void>> {
             return client.put(
                 `/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`,
-                body
+                data
             );
         },
         create({
             instanceId,
             receiverId,
-            body,
+            ...data
         }: CreateVirtualAccountInput): Promise<BlindpayApiResponse<CreateVirtualAccountResponse>> {
             return client.post(
                 `/instances/${instanceId}/receivers/${receiverId}/virtual-accounts`,
-                body
+                data
             );
         },
 

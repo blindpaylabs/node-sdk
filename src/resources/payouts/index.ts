@@ -101,16 +101,14 @@ export type ListPayoutsResponse = {
 
 export type CreatePayoutInput = {
     instanceId: string;
-    body: {
-        receiver_id: string;
-        bank_account_id: string;
-        amount: number;
-        currency: string;
-        description?: string | null;
-        reference?: string | null;
-        network?: Network | null;
-        token?: StablecoinToken | null;
-    };
+    receiver_id: string;
+    bank_account_id: string;
+    amount: number;
+    currency: string;
+    description?: string | null;
+    reference?: string | null;
+    network?: Network | null;
+    token?: StablecoinToken | null;
 };
 
 export type GetPayoutInput = {
@@ -135,10 +133,9 @@ export type ExportPayoutsResponse = Payout[];
 
 export type AuthorizeStellarTokenInput = {
     instanceId: string;
-    body: {
-        quote_id: string;
-        sender_wallet_address: string;
-    };
+
+    quote_id: string;
+    sender_wallet_address: string;
 };
 
 export type AuthorizeStellarTokenResponse = {
@@ -147,11 +144,10 @@ export type AuthorizeStellarTokenResponse = {
 
 export type CreateStellarPayoutInput = {
     instanceId: string;
-    body: {
-        quote_id: string;
-        sender_wallet_address: string;
-        signed_transaction?: string;
-    };
+
+    quote_id: string;
+    sender_wallet_address: string;
+    signed_transaction?: string;
 };
 
 export type CreateStellarPayoutResponse = {
@@ -168,10 +164,9 @@ export type CreateStellarPayoutResponse = {
 
 export type CreateEvmPayoutInput = {
     instanceId: string;
-    body: {
-        quote_id: string;
-        sender_wallet_address: string;
-    };
+
+    quote_id: string;
+    sender_wallet_address: string;
 };
 
 export type CreateEvmPayoutResponse = {
@@ -212,23 +207,23 @@ export function createPayoutsResource(client: InternalApiClient) {
         },
         authorizeStellarToken({
             instanceId,
-            body,
+            ...data
         }: AuthorizeStellarTokenInput): Promise<
             BlindpayApiResponse<AuthorizeStellarTokenResponse>
         > {
-            return client.post(`/instances/${instanceId}/payouts/stellar/authorize`, body);
+            return client.post(`/instances/${instanceId}/payouts/stellar/authorize`, data);
         },
         createStellar({
             instanceId,
-            body,
+            ...data
         }: CreateStellarPayoutInput): Promise<BlindpayApiResponse<CreateStellarPayoutResponse>> {
-            return client.post(`/instances/${instanceId}/payouts/stellar`, body);
+            return client.post(`/instances/${instanceId}/payouts/stellar`, data);
         },
         createEvm({
             instanceId,
-            body,
+            ...data
         }: CreateEvmPayoutInput): Promise<BlindpayApiResponse<CreateEvmPayoutResponse>> {
-            return client.post(`/instances/${instanceId}/payouts/evm`, body);
+            return client.post(`/instances/${instanceId}/payouts/evm`, data);
         },
     };
 }

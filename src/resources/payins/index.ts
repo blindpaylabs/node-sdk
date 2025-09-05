@@ -90,15 +90,14 @@ export type ListPayinsResponse = {
 
 export type CreatePayinInput = {
     instanceId: string;
-    body: {
-        quote_id: string;
-        sender_address: string;
-        receiver_address: string;
-        amount: number;
-        token: StablecoinToken;
-        network: Network;
-        description?: string | null;
-    };
+
+    quote_id: string;
+    sender_address: string;
+    receiver_address: string;
+    amount: number;
+    token: StablecoinToken;
+    network: Network;
+    description?: string | null;
 };
 
 export type GetPayinInput = {
@@ -208,9 +207,8 @@ export type ExportPayinsResponse = Payin[];
 
 export type CreateEvmPayinInput = {
     instanceId: string;
-    body: {
-        payin_quote_id: string;
-    };
+
+    payin_quote_id: string;
 };
 
 export type CreateEvmPayinResponse = Pick<
@@ -253,9 +251,9 @@ export function createPayinsResource(client: InternalApiClient) {
         },
         createEvm({
             instanceId,
-            body,
+            ...data
         }: CreateEvmPayinInput): Promise<BlindpayApiResponse<CreateEvmPayinResponse>> {
-            return client.post(`/instances/${instanceId}/payins/evm`, body);
+            return client.post(`/instances/${instanceId}/payins/evm`, data);
         },
     };
 }

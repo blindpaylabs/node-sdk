@@ -32,13 +32,12 @@ export type ListBlockchainWalletsResponse = {
 export type CreateBlockchainWalletInput = {
     instanceId: string;
     receiverId: string;
-    body: {
-        name: string;
-        network: Network;
-        address: string;
-        is_account_abstraction?: boolean;
-        signature_tx_hash?: string;
-    };
+
+    name: string;
+    network: Network;
+    address: string;
+    is_account_abstraction?: boolean;
+    signature_tx_hash?: string;
 };
 
 export type GetBlockchainWalletInput = {
@@ -59,9 +58,8 @@ export type CreateBlockchainWalletResponse = BlockchainWallet;
 
 export type CreateAssetTrustlineInput = {
     instanceId: string;
-    body: {
-        address: string;
-    };
+
+    address: string;
 };
 
 export type CreateAssetTrustlineResponse = {
@@ -70,11 +68,10 @@ export type CreateAssetTrustlineResponse = {
 
 export type MintUsdbStellarInput = {
     instanceId: string;
-    body: {
-        address: string;
-        amount: string;
-        signedXdr: string;
-    };
+
+    address: string;
+    amount: string;
+    signedXdr: string;
 };
 
 export function createBlockchainWalletsResource(client: InternalApiClient) {
@@ -91,11 +88,11 @@ export function createBlockchainWalletsResource(client: InternalApiClient) {
         },
         create({
             instanceId,
-            body,
+            ...data
         }: CreateBlockchainWalletInput): Promise<
             BlindpayApiResponse<CreateBlockchainWalletResponse>
         > {
-            return client.post(`/instances/${instanceId}/blockchain-wallets`, body);
+            return client.post(`/instances/${instanceId}/blockchain-wallets`, data);
         },
         getWalletMessage({
             receiverId,
@@ -127,15 +124,15 @@ export function createBlockchainWalletsResource(client: InternalApiClient) {
         },
         createAssetTrustline({
             instanceId,
-            body,
+            ...data
         }: CreateAssetTrustlineInput): Promise<BlindpayApiResponse<CreateAssetTrustlineResponse>> {
-            return client.post(`/instances/${instanceId}/create-asset-trustline`, body);
+            return client.post(`/instances/${instanceId}/create-asset-trustline`, data);
         },
         mintUsdbStellar({
             instanceId,
-            body,
+            ...data
         }: MintUsdbStellarInput): Promise<BlindpayApiResponse<void>> {
-            return client.post(`/instances/${instanceId}/mint-usdb-stellar`, body);
+            return client.post(`/instances/${instanceId}/mint-usdb-stellar`, data);
         },
     };
 }

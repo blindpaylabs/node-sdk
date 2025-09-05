@@ -126,44 +126,43 @@ export type ListReceiversResponse = Array<Receiver>;
 
 export type CreateReceiverInput = {
     instanceId: string;
-    body: {
-        country: Country;
-        kyc_type: KycType;
-        type: AccountClass;
-        address_line_1: string;
-        address_line_2?: string;
-        city: string;
-        image_url: string;
-        ip_address: string;
-        postal_code: string;
-        state_province_region: string;
-        tax_id: string;
-        alternate_name?: string;
-        date_of_birth: string;
-        external_id: string;
-        first_name: string;
-        formation_date: string;
-        id_doc_back_file: string;
-        id_doc_front_file: string;
-        id_doc_type: IdentificationDocument;
-        id_doc_country: Country;
-        email: string;
-        incorporation_doc_file: string;
-        individual_holding_doc_front_file: string;
-        last_name: string;
-        legal_name: string;
-        owners: Owner[];
-        phone_number: string;
-        proof_of_address_doc_file: string;
-        proof_of_address_doc_type: ProofOfAddressDocType;
-        proof_of_ownership_doc_file: string;
-        purpose_of_transactions: PurposeOfTransactions;
-        purpose_of_transactions_explanation: string;
-        source_of_funds_doc_file: string;
-        source_of_funds_doc_type: SourceOfFundsDocType;
-        tos_id: string;
-        website: string;
-    };
+
+    country: Country;
+    kyc_type: KycType;
+    type: AccountClass;
+    address_line_1: string;
+    address_line_2?: string;
+    city: string;
+    image_url: string;
+    ip_address: string;
+    postal_code: string;
+    state_province_region: string;
+    tax_id: string;
+    alternate_name?: string;
+    date_of_birth: string;
+    external_id: string;
+    first_name: string;
+    formation_date: string;
+    id_doc_back_file: string;
+    id_doc_front_file: string;
+    id_doc_type: IdentificationDocument;
+    id_doc_country: Country;
+    email: string;
+    incorporation_doc_file: string;
+    individual_holding_doc_front_file: string;
+    last_name: string;
+    legal_name: string;
+    owners: Owner[];
+    phone_number: string;
+    proof_of_address_doc_file: string;
+    proof_of_address_doc_type: ProofOfAddressDocType;
+    proof_of_ownership_doc_file: string;
+    purpose_of_transactions: PurposeOfTransactions;
+    purpose_of_transactions_explanation: string;
+    source_of_funds_doc_file: string;
+    source_of_funds_doc_type: SourceOfFundsDocType;
+    tos_id: string;
+    website: string;
 };
 
 export type CreateReceiverResponse = {
@@ -180,61 +179,60 @@ export type GetReceiverResponse = Receiver;
 export type UpdateReceiverInput = {
     instanceId: string;
     id: string;
-    body: {
-        email?: string;
-        tax_id?: string;
-        address_line_1?: string;
-        address_line_2?: string;
-        city?: string;
-        state_province_region?: string;
-        country?: Country;
-        postal_code?: string;
-        ip_address?: string;
-        image_url?: string;
-        phone_number?: string;
-        proof_of_address_doc_type?: ProofOfAddressDocType;
-        proof_of_address_doc_file?: string;
-        first_name?: string;
-        last_name?: string;
-        date_of_birth?: string;
-        id_doc_country?: Country;
-        id_doc_type?: IdentificationDocument;
-        id_doc_front_file?: string;
-        id_doc_back_file?: string;
-        legal_name?: string;
-        alternate_name?: string;
-        formation_date?: string;
-        website?: string;
-        owners?: Array<
-            { id: string } & Pick<
-                Owner,
-                | "first_name"
-                | "last_name"
-                | "role"
-                | "date_of_birth"
-                | "tax_id"
-                | "address_line_1"
-                | "address_line_2"
-                | "city"
-                | "state_province_region"
-                | "country"
-                | "postal_code"
-                | "id_doc_country"
-                | "id_doc_type"
-                | "id_doc_front_file"
-                | "id_doc_back_file"
-            >
-        >;
-        incorporation_doc_file?: string;
-        proof_of_ownership_doc_file?: string;
-        source_of_funds_doc_type?: SourceOfFundsDocType;
-        source_of_funds_doc_file?: string;
-        individual_holding_doc_front_file?: string;
-        purpose_of_transactions?: PurposeOfTransactions;
-        purpose_of_transactions_explanation?: string;
-        external_id?: string;
-        tos_id?: string;
-    };
+
+    email?: string;
+    tax_id?: string;
+    address_line_1?: string;
+    address_line_2?: string;
+    city?: string;
+    state_province_region?: string;
+    country?: Country;
+    postal_code?: string;
+    ip_address?: string;
+    image_url?: string;
+    phone_number?: string;
+    proof_of_address_doc_type?: ProofOfAddressDocType;
+    proof_of_address_doc_file?: string;
+    first_name?: string;
+    last_name?: string;
+    date_of_birth?: string;
+    id_doc_country?: Country;
+    id_doc_type?: IdentificationDocument;
+    id_doc_front_file?: string;
+    id_doc_back_file?: string;
+    legal_name?: string;
+    alternate_name?: string;
+    formation_date?: string;
+    website?: string;
+    owners?: Array<
+        { id: string } & Pick<
+            Owner,
+            | "first_name"
+            | "last_name"
+            | "role"
+            | "date_of_birth"
+            | "tax_id"
+            | "address_line_1"
+            | "address_line_2"
+            | "city"
+            | "state_province_region"
+            | "country"
+            | "postal_code"
+            | "id_doc_country"
+            | "id_doc_type"
+            | "id_doc_front_file"
+            | "id_doc_back_file"
+        >
+    >;
+    incorporation_doc_file?: string;
+    proof_of_ownership_doc_file?: string;
+    source_of_funds_doc_type?: SourceOfFundsDocType;
+    source_of_funds_doc_file?: string;
+    individual_holding_doc_front_file?: string;
+    purpose_of_transactions?: PurposeOfTransactions;
+    purpose_of_transactions_explanation?: string;
+    external_id?: string;
+    tos_id?: string;
 };
 
 export type DeleteReceiverInput = {
@@ -269,9 +267,9 @@ export function createReceiversResource(client: InternalApiClient) {
         },
         create({
             instanceId,
-            body,
+            ...data
         }: CreateReceiverInput): Promise<BlindpayApiResponse<CreateReceiverResponse>> {
-            return client.post(`/instances/${instanceId}/receivers`, body);
+            return client.post(`/instances/${instanceId}/receivers`, data);
         },
         get({
             instanceId,
@@ -279,13 +277,20 @@ export function createReceiversResource(client: InternalApiClient) {
         }: GetReceiverInput): Promise<BlindpayApiResponse<GetReceiverResponse>> {
             return client.get(`/instances/${instanceId}/receivers/${id}`);
         },
-        update({ instanceId, id, body }: UpdateReceiverInput): Promise<BlindpayApiResponse<void>> {
-            return client.patch(`/instances/${instanceId}/receivers/${id}`, body);
+        update({
+            instanceId,
+            id,
+            ...data
+        }: UpdateReceiverInput): Promise<BlindpayApiResponse<void>> {
+            return client.patch(`/instances/${instanceId}/receivers/${id}`, data);
         },
         delete({ instanceId, id }: DeleteReceiverInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/receivers/${id}`);
         },
-        getLimits({ instanceId, id }: GetReceiverLimitsInput): Promise<BlindpayApiResponse<GetReceiverLimitsResponse>> {
+        getLimits({
+            instanceId,
+            id,
+        }: GetReceiverLimitsInput): Promise<BlindpayApiResponse<GetReceiverLimitsResponse>> {
             return client.get(`/instances/${instanceId}/limits/receivers/${id}`);
         },
     };

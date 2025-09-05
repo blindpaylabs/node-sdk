@@ -77,58 +77,57 @@ export type ListBankAccountsResponse = {
 export type CreateBankAccountInput = {
     instanceId: string;
     receiverId: string;
-    body: {
-        type: Rail;
-        name: string;
-        pix_key: string;
-        beneficiary_name: string;
-        routing_number: string;
-        account_number: string;
-        account_type: BankAccountType;
-        account_class: AccountClass;
-        address_line_1: string;
-        address_line_2: string;
-        city: string;
-        state_province_region: string;
-        postal_code: string;
-        country: Country;
-        checkbook_account_id: string;
-        checkbook_user_key: string;
-        spei_protocol: string;
-        spei_institution_code: string;
-        spei_clabe: string;
-        transfers_type: "CVU" | "CBU" | "ALIAS";
-        transfers_account: string;
-        ach_cop_beneficiary_first_name: string;
-        ach_cop_beneficiary_last_name: string;
-        ach_cop_document_id: string;
-        ach_cop_document_type: AchCopDocumentType;
-        ach_cop_email: string;
-        ach_cop_bank_code: string;
-        ach_cop_bank_account: string;
-        swift_code_bic: string;
-        swift_account_holder_name: string;
-        swift_account_number_iban: string;
-        swift_beneficiary_address_line_1: string;
-        swift_beneficiary_address_line_2: string;
-        swift_beneficiary_country: Country;
-        swift_beneficiary_city: string;
-        swift_beneficiary_state_province_region: string;
-        swift_beneficiary_postal_code: string;
-        swift_bank_name: string;
-        swift_bank_address_line_1: string;
-        swift_bank_address_line_2: string;
-        swift_bank_country: Country;
-        swift_bank_city: string;
-        swift_bank_state_province_region: string;
-        swift_bank_postal_code: string;
-        swift_intermediary_bank_swift_code_bic: string;
-        swift_intermediary_bank_account_number_iban: string;
-        swift_intermediary_bank_name: string;
-        swift_intermediary_bank_country: Country;
-        bank_name: string;
-        swift_code: string;
-    };
+
+    type: Rail;
+    name: string;
+    pix_key: string;
+    beneficiary_name: string;
+    routing_number: string;
+    account_number: string;
+    account_type: BankAccountType;
+    account_class: AccountClass;
+    address_line_1: string;
+    address_line_2: string;
+    city: string;
+    state_province_region: string;
+    postal_code: string;
+    country: Country;
+    checkbook_account_id: string;
+    checkbook_user_key: string;
+    spei_protocol: string;
+    spei_institution_code: string;
+    spei_clabe: string;
+    transfers_type: "CVU" | "CBU" | "ALIAS";
+    transfers_account: string;
+    ach_cop_beneficiary_first_name: string;
+    ach_cop_beneficiary_last_name: string;
+    ach_cop_document_id: string;
+    ach_cop_document_type: AchCopDocumentType;
+    ach_cop_email: string;
+    ach_cop_bank_code: string;
+    ach_cop_bank_account: string;
+    swift_code_bic: string;
+    swift_account_holder_name: string;
+    swift_account_number_iban: string;
+    swift_beneficiary_address_line_1: string;
+    swift_beneficiary_address_line_2: string;
+    swift_beneficiary_country: Country;
+    swift_beneficiary_city: string;
+    swift_beneficiary_state_province_region: string;
+    swift_beneficiary_postal_code: string;
+    swift_bank_name: string;
+    swift_bank_address_line_1: string;
+    swift_bank_address_line_2: string;
+    swift_bank_country: Country;
+    swift_bank_city: string;
+    swift_bank_state_province_region: string;
+    swift_bank_postal_code: string;
+    swift_intermediary_bank_swift_code_bic: string;
+    swift_intermediary_bank_account_number_iban: string;
+    swift_intermediary_bank_name: string;
+    swift_intermediary_bank_country: Country;
+    bank_name: string;
+    swift_code: string;
 };
 
 export type CreateBankAccountResponse = {
@@ -227,11 +226,11 @@ export function createBankAccountsResource(client: InternalApiClient) {
         create({
             instanceId,
             receiverId,
-            body,
+            ...data
         }: CreateBankAccountInput): Promise<BlindpayApiResponse<CreateBankAccountResponse>> {
             return client.post(
                 `/instances/${instanceId}/receivers/${receiverId}/bank-accounts`,
-                body
+                data
             );
         },
         get({
