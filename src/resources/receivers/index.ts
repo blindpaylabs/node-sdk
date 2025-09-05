@@ -242,7 +242,23 @@ export type DeleteReceiverInput = {
     id: string;
 };
 
-// TODO: implement get receiver limits (fix api reference first)
+export type GetReceiverLimitsInput = {
+    instanceId: string;
+    id: string;
+};
+
+export type GetReceiverLimitsResponse = {
+    limits: {
+        payin: {
+            daily: number;
+            monthly: number;
+        };
+        payout: {
+            daily: number;
+            monthly: number;
+        };
+    };
+};
 
 export function createReceiversResource(client: InternalApiClient) {
     return {
@@ -268,6 +284,9 @@ export function createReceiversResource(client: InternalApiClient) {
         },
         delete({ instanceId, id }: DeleteReceiverInput): Promise<BlindpayApiResponse<void>> {
             return client.delete(`/instances/${instanceId}/receivers/${id}`);
+        },
+        getLimits({ instanceId, id }: GetReceiverLimitsInput): Promise<BlindpayApiResponse<GetReceiverLimitsResponse>> {
+            return client.get(`/instances/${instanceId}/limits/receivers/${id}`);
         },
     };
 }
