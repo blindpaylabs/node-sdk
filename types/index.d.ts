@@ -335,7 +335,6 @@ export type TrackingPartnerFee = {
  * Internal API client interface that resources use to make HTTP requests.
  * This interface is not exposed to SDK users.
  */
-/** @internal */
 export interface InternalApiClient {
     get: <T>(path: string) => Promise<BlindpayApiResponse<T>>;
     post: <T>(path: string, body: Record<string, unknown>) => Promise<BlindpayApiResponse<T>>;
