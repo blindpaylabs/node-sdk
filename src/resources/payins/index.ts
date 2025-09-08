@@ -234,7 +234,7 @@ export function createPayinsResource(client: InternalApiClient) {
             params,
         }: ListPayinsInput): Promise<BlindpayApiResponse<ListPayinsResponse>> {
             const queryParams = params ? `?${new URLSearchParams(params)}` : "";
-            return client.get<ListPayinsResponse>(`/instances/${instanceId}/payins${queryParams}`);
+            return client.get(`/instances/${instanceId}/payins${queryParams}`);
         },
         get({ instanceId, id }: GetPayinInput): Promise<BlindpayApiResponse<GetPayinResponse>> {
             return client.get(`/instances/${instanceId}/payins/${id}`);

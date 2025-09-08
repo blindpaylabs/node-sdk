@@ -47,7 +47,7 @@ export type DeleteApiKeyInput = {
 export function createApiKeysResource(client: InternalApiClient) {
     return {
         list({ instanceId }: ListApiKeysInput): Promise<BlindpayApiResponse<ListApiKeysResponse>> {
-            return client.get<ListApiKeysResponse>(`/instances/${instanceId}/api-keys`);
+            return client.get(`/instances/${instanceId}/api-keys`);
         },
         create({
             instanceId,

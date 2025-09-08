@@ -64,7 +64,7 @@ export type GetFxRateResponse = {
     instance_percentage_fee: number;
 };
 
-export function createPayoutsResource(client: InternalApiClient) {
+export function createQuotesResource(client: InternalApiClient) {
     return {
         create({
             instanceId,

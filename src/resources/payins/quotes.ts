@@ -8,7 +8,7 @@ import type {
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type CreateQuoteInput = {
+export type CreatePayinQuoteInput = {
     instanceId: string;
 
     bank_account_id: string;
@@ -24,7 +24,7 @@ export type CreateQuoteInput = {
     transaction_document_type: TransactionDocumentType | null;
 };
 
-export type CreateQuoteResponse = {
+export type CreatePayinQuoteResponse = {
     id: string;
     expires_at: number;
     commercial_quotation: number;
@@ -48,14 +48,14 @@ export type CreateQuoteResponse = {
     description: string | null;
 };
 
-export type GetFxRateResponse = {
+export type GetPayinFxRateResponse = {
     blindpay_quotation: number;
     commercial_quotation: number;
     instance_flat_fee: number;
     instance_percentage_fee: number;
 };
 
-export type GetFxRateInput = {
+export type GetPayinFxRateInput = {
     instanceId: string;
 
     currency: CurrencyType;
@@ -64,19 +64,19 @@ export type GetFxRateInput = {
     request_amount: number;
 };
 
-export function createQuoteResource(client: InternalApiClient) {
+export function createPayinQuotesResource(client: InternalApiClient) {
     return {
         create({
-            instanceId,
+            instanceId, 
             ...data
-        }: CreateQuoteInput): Promise<BlindpayApiResponse<CreateQuoteResponse>> {
-            return client.post<CreateQuoteResponse>(`/instances/${instanceId}/payin-quotes`, data);
+        }: CreatePayinQuoteInput): Promise<BlindpayApiResponse<CreatePayinQuoteResponse>> {
+            return client.post(`/instances/${instanceId}/payin-quotes`, data);
         },
         getFxRate({
             instanceId,
             ...data
-        }: GetFxRateInput): Promise<BlindpayApiResponse<GetFxRateResponse>> {
-            return client.post<GetFxRateResponse>(`/instances/${instanceId}/payin-quotes/fx`, data);
+        }: GetPayinFxRateInput): Promise<BlindpayApiResponse<GetPayinFxRateResponse>> {
+            return client.post(`/instances/${instanceId}/payin-quotes/fx`, data);
         },
     };
 }

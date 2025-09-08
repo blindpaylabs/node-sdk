@@ -1,7 +1,7 @@
 import type { BlindpayApiResponse } from "../../types";
 
 /**
- * @internal
+ *
  * Internal API client interface that resources use to make HTTP requests.
  * This interface is not exposed to SDK users.
  */

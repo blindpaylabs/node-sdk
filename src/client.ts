@@ -8,13 +8,14 @@ import { createBankAccountsResource } from "./resources/bank-accounts";
 import { createInstancesResource } from "./resources/instances";
 import { createPartnerFeesResource } from "./resources/partner-fees";
 import { createPayinsResource } from "./resources/payins";
-import { createQuoteResource } from "./resources/payins/quotes";
+import { createPayinQuotesResource } from "./resources/payins/quotes";
 import { createPayoutsResource } from "./resources/payouts";
 import { createReceiversResource } from "./resources/receivers";
 import { createVirtualAccountsResource } from "./resources/virtual-accounts";
 import { createBlockchainWalletsResource } from "./resources/wallets/blockchain";
 import { createOfframpWalletsResource } from "./resources/wallets/offramp";
 import { createWebhookEndpointsResource } from "./resources/webhooks";
+import { createQuotesResource } from "./resources/quotes";
 
 export class Blindpay {
     // Options
@@ -26,8 +27,8 @@ export class Blindpay {
     // Resources
     readonly available: ReturnType<typeof createAvailableResource>;
     readonly partnerFees: ReturnType<typeof createPartnerFeesResource>;
-    readonly payins: ReturnType<typeof createPayinsResource>;
-    readonly quotes: ReturnType<typeof createQuoteResource>;
+    readonly payins: ReturnType<typeof createPayinsResource> & { quotes: ReturnType<typeof createPayinQuotesResource> };
+    readonly quotes: ReturnType<typeof createQuotesResource>;
     readonly payouts: ReturnType<typeof createPayoutsResource>;
     readonly virtualAccounts: ReturnType<typeof createVirtualAccountsResource>;
     readonly receivers: ReturnType<typeof createReceiversResource> & {
@@ -77,9 +78,10 @@ export class Blindpay {
 
         this.payins = {
             ...createPayinsResource(this.api),
+            quotes: createPayinQuotesResource(this.api),
         };
 
-        this.quotes = createQuoteResource(this.api);
+        this.quotes = createQuotesResource(this.api);
 
         this.payouts = createPayoutsResource(this.api);
 

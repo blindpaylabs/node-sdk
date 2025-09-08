@@ -82,7 +82,7 @@ export function createBlockchainWalletsResource(client: InternalApiClient) {
         }: ListBlockchainWalletsInput): Promise<
             BlindpayApiResponse<ListBlockchainWalletsResponse>
         > {
-            return client.get<ListBlockchainWalletsResponse>(
+            return client.get(
                 `/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets`
             );
         },
