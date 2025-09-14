@@ -6,13 +6,16 @@ import type {
     Rail,
 } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
+import type { SpeiProtocol } from "../payouts";
 
 export type ListBankAccountsInput = {
     instanceId: string;
     receiverId: string;
 };
 
-export type AchCopDocumentType = "CC" | "CE" | "NIT" | "PASS" | "PEP";
+export type ArgentinaTransfers = "CVU" | "CBU" | "ALIAS";
+
+export type AchCopDocument = "CC" | "CE" | "NIT" | "PASS" | "PEP";
 
 export type ListBankAccountsResponse = {
     data: Array<{
@@ -39,7 +42,7 @@ export type ListBankAccountsResponse = {
         ach_cop_beneficiary_first_name?: string;
         ach_cop_beneficiary_last_name?: string;
         ach_cop_document_id?: string;
-        ach_cop_document_type?: AchCopDocumentType;
+        ach_cop_document_type?: AchCopDocument;
         ach_cop_email?: string;
         ach_cop_bank_code?: string;
         ach_cop_bank_account?: string;
@@ -102,7 +105,7 @@ export type CreateBankAccountInput = {
     ach_cop_beneficiary_first_name: string;
     ach_cop_beneficiary_last_name: string;
     ach_cop_document_id: string;
-    ach_cop_document_type: AchCopDocumentType;
+    ach_cop_document_type: AchCopDocument;
     ach_cop_email: string;
     ach_cop_bank_code: string;
     ach_cop_bank_account: string;
@@ -149,12 +152,12 @@ export type CreateBankAccountResponse = {
     spei_protocol?: string;
     spei_institution_code?: string;
     spei_clabe?: string;
-    transfers_type?: "CVU" | "CBU" | "ALIAS";
+    transfers_type?: ArgentinaTransfers;
     transfers_account?: string;
     ach_cop_beneficiary_first_name?: string;
     ach_cop_beneficiary_last_name?: string;
     ach_cop_document_id?: string;
-    ach_cop_document_type?: AchCopDocumentType;
+    ach_cop_document_type?: AchCopDocument;
     ach_cop_email?: string;
     ach_cop_bank_code?: string;
     ach_cop_bank_account?: string;
@@ -215,6 +218,124 @@ export type DeleteBankAccountInput = {
     id: string;
 };
 
+export type CreatePixInput = {
+    instanceId: string;
+    receiverId: string;
+    name: string;
+    pix_key: string;
+}
+
+export type CreatePixResponse = {
+    id: string;
+    type: 'pix';
+    name: string;
+    pix_key: string;
+    created_at: string;
+}
+
+export type CreateArgentinaTransfersInput = {
+    instanceId: string;
+    receiverId: string;
+    name: string;
+    beneficiary_name: string;
+    transfers_account: string;
+    transfers_type: ArgentinaTransfers;
+}
+
+export type CreateArgentinaTransfersResponse = {
+    // TODO 
+}
+
+export type CreateSpeiInput = {
+    instanceId: string;
+    receiverId: string;
+    beneficiary_name: string;
+    name: string;
+    spei_clabe: string;
+    spei_institution_code: string;
+    spei_protocol: SpeiProtocol;
+}
+
+export type CreateSpeiResponse = {
+    id: string;
+    type: "spei_bitso";
+    name: string;
+    beneficiary_name: string;
+    spei_protocol: SpeiProtocol;
+    spei_institution_code: string;
+    spei_clabe: string;
+    created_at: string;
+};
+
+export type CreateColombiaAchInput = {
+    instanceId: string;
+    receiverId: string;
+    name: string;
+    account_type: BankAccountType;
+    ach_cop_beneficiary_first_name: string;
+    ach_cop_beneficiary_last_name: string;
+    ach_cop_document_id: string;
+    ach_cop_document_type: AchCopDocument;
+    ach_cop_email: string;
+    ach_cop_bank_code: string;
+    ach_cop_bank_account: string;
+}
+
+export type CreateColombiaAchResponse = {
+    id: string;
+    type: "ach_cop_bitso";
+    name: string;
+    account_type: BankAccountType;
+    ach_cop_beneficiary_first_name: string;
+    ach_cop_beneficiary_last_name: string;
+    ach_cop_document_id: string;
+    ach_cop_document_type: AchCopDocument;
+    ach_cop_email: string;
+    ach_cop_bank_code: string;
+    ach_cop_bank_account: string;
+    created_at: string;
+}
+
+export type CreateAchInput = {
+    instanceId: string;
+    receiverId: string;
+    name: string;
+    account_class: AccountClass;
+    account_number: string;
+    account_type: BankAccountType;
+    beneficiary_name: string;
+    routing_number: string;
+}
+
+export type CreateAchResponse = {
+    // TODO
+}
+
+export type CreateWireInput = {
+    instanceId: string;
+    receiverId: string;
+    name: string;
+    account_number: string;
+    beneficiary_name: string;
+    routing_number: string;
+    address_line_1: string;
+    address_line_2?: string;
+    city: string;
+    state_province_region: string;
+    country: Country;
+    postal_code: string;
+}
+
+export type CreateWireResponse = {
+    // TODO
+}
+
+export type CreateInternationalSwiftInput = { }
+
+export type CreateInternationalSwiftResponse = {
+    // TODO
+}
+
 export function createBankAccountsResource(client: InternalApiClient) {
     return {
         list({
@@ -223,15 +344,87 @@ export function createBankAccountsResource(client: InternalApiClient) {
         }: ListBankAccountsInput): Promise<BlindpayApiResponse<ListBankAccountsResponse>> {
             return client.get(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`);
         },
-        create({
-            instanceId,
-            receiverId,
-            ...data
-        }: CreateBankAccountInput): Promise<BlindpayApiResponse<CreateBankAccountResponse>> {
-            return client.post(
-                `/instances/${instanceId}/receivers/${receiverId}/bank-accounts`,
-                data
-            );
+        createPix(
+            {
+                instanceId,
+                receiverId,
+                name,
+                pix_key
+            }:
+            CreatePixInput
+        ): Promise<BlindpayApiResponse<CreatePixResponse>>{
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {
+                type: 'pix',
+                name,
+                pix_key
+            })
+        },
+        createArgentinaTransfers({ instanceId, receiverId, beneficiary_name, name, transfers_account, transfers_type }: CreateArgentinaTransfersInput): Promise<BlindpayApiResponse<CreateArgentinaTransfersResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {
+                type: "transfers_bitso",
+                beneficiary_name,
+                name,
+                transfers_account,
+                transfers_type,
+            })
+        },
+        createSpei({ instanceId, receiverId, beneficiary_name, name, spei_clabe, spei_institution_code, spei_protocol }: CreateSpeiInput): Promise<BlindpayApiResponse<CreateSpeiResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {
+                    type: "spei_bitso",
+                    beneficiary_name,
+                    name,
+                    spei_clabe,
+                    spei_institution_code,
+                    spei_protocol
+            })
+
+        },
+        createColombiaAch({ instanceId, receiverId, name, account_type, ach_cop_beneficiary_first_name, ach_cop_beneficiary_last_name, ach_cop_document_id, ach_cop_document_type, ach_cop_email, ach_cop_bank_code, ach_cop_bank_account }: CreateColombiaAchInput): Promise<BlindpayApiResponse<CreateColombiaAchResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {
+                type: "ach_cop_bitso",
+                name,
+                account_type,
+                ach_cop_beneficiary_first_name,
+                ach_cop_beneficiary_last_name,
+                ach_cop_document_id,
+                ach_cop_document_type,
+                ach_cop_email,
+                ach_cop_bank_code,
+                ach_cop_bank_account
+            })
+
+        },
+        createAch({ instanceId, receiverId, name, account_class, account_number, account_type, beneficiary_name, routing_number }: CreateAchInput): Promise<BlindpayApiResponse<CreateAchResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {
+                type: "ach",
+                name,
+                account_class,
+                account_number,
+                account_type,
+                beneficiary_name,
+                routing_number
+            })
+
+        },
+        createWire({ instanceId, receiverId, name, account_number, beneficiary_name, routing_number, address_line_1, address_line_2, city, state_province_region, country, postal_code }: CreateWireInput): Promise<BlindpayApiResponse<CreateWireResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {
+                type: "wire",
+                name,
+                account_number,
+                beneficiary_name,
+                routing_number,
+                address_line_1,
+                address_line_2,
+                city,
+                state_province_region,
+                country,
+                postal_code
+            })
+
+        },
+        createInternationalSwift(){
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`)
+
         },
         get({
             instanceId,
