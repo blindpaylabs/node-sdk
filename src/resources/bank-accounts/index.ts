@@ -330,7 +330,11 @@ export type CreateWireResponse = {
     // TODO
 }
 
-export type CreateInternationalSwiftInput = { }
+export type CreateInternationalSwiftInput = {
+    instanceId: string;
+    receiverId: string;
+    // TODO
+ }
 
 export type CreateInternationalSwiftResponse = {
     // TODO
@@ -422,8 +426,8 @@ export function createBankAccountsResource(client: InternalApiClient) {
             })
 
         },
-        createInternationalSwift(){
-            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`)
+        createInternationalSwift({ instanceId, receiverId }: CreateInternationalSwiftInput): Promise<BlindpayApiResponse<CreateInternationalSwiftResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {})
 
         },
         get({

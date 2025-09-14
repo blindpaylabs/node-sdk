@@ -23,7 +23,7 @@
     },
     "main": "dist/index.js",
     "module": "dist/index.mjs",
-    "types": "types/index.d.ts",
+    "types": "dist/index.d.ts",
     "devDependencies": {
         "@biomejs/biome": "^2.2.2",
         "@changesets/cli": "^2.29.6",
@@ -40,12 +40,19 @@
         }
     },
     "license": "MIT",
+    "files": [
+        "dist/**"
+    ],
     "scripts": {
-        "build": "tsup src/resources/ --format cjs,esm --dts",
+        "build": "tsup src/index.ts src/resources/ --format cjs,esm --dts",
         "lint:check": "biome check .",
         "lint:fix": "biome check --write ."
     },
     "exports": {
-        "types": "./dist/index.d.ts"
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        }
     }
 }
