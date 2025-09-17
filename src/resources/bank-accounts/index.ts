@@ -308,7 +308,28 @@ export type CreateAchInput = {
 }
 
 export type CreateAchResponse = {
-    // TODO
+    id: string;
+    type: "ach";
+    name: string;
+    beneficiary_name: string;
+    routing_number: string;
+    account_number: string;
+    account_type: BankAccountType;
+    account_class: AccountClass;
+    address_line_1: string | null;
+    address_line_2: string | null;
+    city: string | null;
+    state_province_region: string | null;
+    country: Country | null;
+    postal_code: string | null;
+    ach_cop_beneficiary_first_name: string | null;
+    ach_cop_beneficiary_last_name: string | null;
+    ach_cop_document_id: string | null;
+    ach_cop_document_type: AchCopDocument | null;
+    ach_cop_email: string | null;
+    ach_cop_bank_code: string | null;
+    ach_cop_bank_account: string | null;
+    created_at: string;
 }
 
 export type CreateWireInput = {
@@ -327,17 +348,79 @@ export type CreateWireInput = {
 }
 
 export type CreateWireResponse = {
-    // TODO
+    id: string;
+    type: "wire";
+    name: string;
+    beneficiary_name: string;
+    routing_number: string;
+    account_number: string;
+    address_line_1: string;
+    address_line_2: string;
+    city: string;
+    state_province_region: string;
+    country: Country;
+    postal_code: string;
+    created_at: string;
 }
 
 export type CreateInternationalSwiftInput = {
     instanceId: string;
     receiverId: string;
-    // TODO
- }
+    name: string;
+    swift_account_holder_name: string;
+    swift_account_number_iban: string;
+    swift_bank_address_line_1: string;
+    swift_bank_address_line_2?: string;
+    swift_bank_city: string;
+    swift_bank_country: Country;
+    swift_bank_name: string;
+    swift_bank_postal_code: string;
+    swift_bank_state_province_region: string;
+    swift_beneficiary_address_line_1: string;
+    swift_beneficiary_address_line_2?: string;
+    swift_beneficiary_city: string;
+    swift_beneficiary_country: Country;
+    swift_beneficiary_postal_code: string;
+    swift_beneficiary_state_province_region: string;
+    swift_code_bic: string;
+    swift_intermediary_bank_account_number_iban: string | null;
+    swift_intermediary_bank_country: Country | null;
+    swift_intermediary_bank_name: string | null;
+    swift_intermediary_bank_swift_code_bic: string | null;
+}
 
 export type CreateInternationalSwiftResponse = {
-    // TODO
+    id: string;
+    type: "international_swift";
+    name: string;
+    beneficiary_name: string | null;
+    address_line_1: string | null;
+    address_line_2: string | null;
+    city: string | null;
+    state_province_region: string | null;
+    country: Country | null;
+    postal_code: string | null;
+    swift_code_bic: string;
+    swift_account_holder_name: string;
+    swift_account_number_iban: string;
+    swift_beneficiary_address_line_1: string;
+    swift_beneficiary_address_line_2: string | null;
+    swift_beneficiary_country: Country;
+    swift_beneficiary_city: string;
+    swift_beneficiary_state_province_region: string;
+    swift_beneficiary_postal_code: string;
+    swift_bank_name: string;
+    swift_bank_address_line_1: string;
+    swift_bank_address_line_2: string | null;
+    swift_bank_country: Country;
+    swift_bank_city: string;
+    swift_bank_state_province_region: string;
+    swift_bank_postal_code: string;
+    swift_intermediary_bank_swift_code_bic: string | null;
+    swift_intermediary_bank_account_number_iban: string | null;
+    swift_intermediary_bank_name: string | null;
+    swift_intermediary_bank_country: Country | null;
+    created_at: string;
 }
 
 export function createBankAccountsResource(client: InternalApiClient) {
@@ -426,8 +509,31 @@ export function createBankAccountsResource(client: InternalApiClient) {
             })
 
         },
-        createInternationalSwift({ instanceId, receiverId }: CreateInternationalSwiftInput): Promise<BlindpayApiResponse<CreateInternationalSwiftResponse>> {
-            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {})
+        createInternationalSwift({ instanceId, receiverId, name, swift_account_holder_name, swift_account_number_iban, swift_bank_address_line_1, swift_bank_address_line_2, swift_bank_city, swift_bank_country, swift_bank_name, swift_bank_postal_code, swift_bank_state_province_region, swift_beneficiary_address_line_1, swift_beneficiary_address_line_2, swift_beneficiary_city, swift_beneficiary_country, swift_beneficiary_postal_code, swift_beneficiary_state_province_region, swift_code_bic, swift_intermediary_bank_account_number_iban, swift_intermediary_bank_country, swift_intermediary_bank_name, swift_intermediary_bank_swift_code_bic }: CreateInternationalSwiftInput): Promise<BlindpayApiResponse<CreateInternationalSwiftResponse>> {
+            return client.post(`/instances/${instanceId}/receivers/${receiverId}/bank-accounts`, {
+                type: "international_swift",
+                name,
+                swift_account_holder_name,
+                swift_account_number_iban,
+                swift_bank_address_line_1,
+                swift_bank_address_line_2,
+                swift_bank_city,
+                swift_bank_country,
+                swift_bank_name,
+                swift_bank_postal_code,
+                swift_bank_state_province_region,
+                swift_beneficiary_address_line_1,
+                swift_beneficiary_address_line_2,
+                swift_beneficiary_city,
+                swift_beneficiary_country,
+                swift_beneficiary_postal_code,
+                swift_beneficiary_state_province_region,
+                swift_code_bic,
+                swift_intermediary_bank_account_number_iban,
+                swift_intermediary_bank_country,
+                swift_intermediary_bank_name,
+                swift_intermediary_bank_swift_code_bic
+            })
 
         },
         get({

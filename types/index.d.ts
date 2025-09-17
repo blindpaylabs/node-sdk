@@ -1,8 +1,12 @@
 export type BlindpayApiResponse<T> = BlindpayErrorResponse | BlindpaySuccessResponse<T>
 
+export type ErrorResponse = {
+    message: string;
+}
+
 export type BlindpayErrorResponse = {
     data: null
-    error: unknown;
+    error: ErrorResponse;
 }
 
 export type BlindpaySuccessResponse<T> = {

@@ -110,32 +110,43 @@ export class Blindpay {
                 body: body ? JSON.stringify(body) : undefined,
             });
 
+            
             if (!response.ok) {
                 const error = await response.json();
-
                 return {
                     data: null,
-                    error,
+                    error: {
+                        message: error?.message ?? 'Unknown error',
+                    },
                 };
             }
-
+            
             const data = await response.json();
+
 
             return {
                 data,
                 error: null,
             };
+
         } catch (error) {
             if (error instanceof Error) {
+
                 return {
                     data: null,
-                    error,
+                    error: {
+                        message: error.message,
+                    },
                 };
             }
 
+            const errorMessage = error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' ? error.message : 'Unknown error';
+
             return {
                 data: null,
-                error,
+                error: {
+                    message: errorMessage
+                },
             };
         }
     }
