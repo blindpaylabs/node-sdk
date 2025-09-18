@@ -59,7 +59,7 @@ export class Blindpay {
             Authorization: `Bearer ${this.apiKey}`,
         };
 
-        // Create internal API client with bound methods
+        // Initialize the internal API client with bound HTTP methods to encapsulate and restrict direct access to raw API calls
         this.api = {
             get: this.get.bind(this),
             post: this.post.bind(this),

@@ -1,6 +1,11 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { Blindpay } from "../../client";
-import type { CreateReceiverResponse, GetReceiverLimitsResponse, GetReceiverResponse, ListReceiversResponse } from ".";
+import type {
+    CreateReceiverResponse,
+    GetReceiverLimitsResponse,
+    GetReceiverResponse,
+    ListReceiversResponse,
+} from ".";
 
 describe("Receivers", () => {
     afterEach(() => fetchMock.resetMocks());

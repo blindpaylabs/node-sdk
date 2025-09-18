@@ -10,8 +10,8 @@ export type BlindpayErrorResponse = {
 }
 
 export type BlindpaySuccessResponse<T> = {
-    error: null;
     data: T;
+    error: null;
 }
 
 export type CurrencyType = "sender" | "receiver";

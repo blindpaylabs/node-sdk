@@ -44,7 +44,8 @@ describe("Bank accounts", () => {
 
     describe("Create argentina transfers bank account", () => {
         it("should create an argentina transfers bank account", async () => {
-            const mockedArgentinaTransfersAccount = { // TODO: add type here
+            const mockedArgentinaTransfersAccount = {
+                // TODO: add type here
                 id: "ba_000000000000",
                 type: "transfers_bitso",
                 name: "Argentina Transfers Account",
@@ -249,14 +250,16 @@ describe("Bank accounts", () => {
                 swift_code_bic: "123456789",
                 swift_account_holder_name: "John Doe",
                 swift_account_number_iban: "123456789",
-                swift_beneficiary_address_line_1: "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
+                swift_beneficiary_address_line_1:
+                    "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
                 swift_beneficiary_address_line_2: null,
                 swift_beneficiary_country: "MX",
                 swift_beneficiary_city: "City",
                 swift_beneficiary_state_province_region: "District",
                 swift_beneficiary_postal_code: "11530",
                 swift_bank_name: "Banco Regional SA",
-                swift_bank_address_line_1: "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
+                swift_bank_address_line_1:
+                    "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
                 swift_bank_address_line_2: null,
                 swift_bank_country: "MX",
                 swift_bank_city: "City",
@@ -279,13 +282,15 @@ describe("Bank accounts", () => {
                 name: "International Swift Account",
                 swift_account_holder_name: "John Doe",
                 swift_account_number_iban: "123456789",
-                swift_bank_address_line_1: "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
+                swift_bank_address_line_1:
+                    "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
                 swift_bank_city: "City",
                 swift_bank_country: "MX",
                 swift_bank_name: "Banco Regional SA",
                 swift_bank_postal_code: "11530",
                 swift_bank_state_province_region: "District",
-                swift_beneficiary_address_line_1: "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
+                swift_beneficiary_address_line_1:
+                    "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
                 swift_beneficiary_city: "City",
                 swift_beneficiary_country: "MX",
                 swift_beneficiary_postal_code: "11530",
@@ -369,15 +374,19 @@ describe("Bank accounts", () => {
                         swift_code_bic: "123456789",
                         swift_account_holder_name: "John Doe",
                         swift_account_number_iban: "123456789",
-                        swift_beneficiary_address_line_1: "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
-                        swift_beneficiary_address_line_2: "456 Oak Avenue, Building 7, Financial District, Business Center CP 54321",
+                        swift_beneficiary_address_line_1:
+                            "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
+                        swift_beneficiary_address_line_2:
+                            "456 Oak Avenue, Building 7, Financial District, Business Center CP 54321",
                         swift_beneficiary_country: "MX",
                         swift_beneficiary_city: "City",
                         swift_beneficiary_state_province_region: "District",
                         swift_beneficiary_postal_code: "11530",
                         swift_bank_name: "Banco Regional SA",
-                        swift_bank_address_line_1: "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
-                        swift_bank_address_line_2: "456 Oak Avenue, Building 7, Financial District, Business Center CP 54321",
+                        swift_bank_address_line_1:
+                            "123 Main Street, Suite 100, Downtown District, City Center CP 12345",
+                        swift_bank_address_line_2:
+                            "456 Oak Avenue, Building 7, Financial District, Business Center CP 54321",
                         swift_bank_country: "MX",
                         swift_bank_city: "City",
                         swift_bank_state_province_region: "District",

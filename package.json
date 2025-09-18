@@ -1,21 +1,20 @@
 {
-    "name": "blindpay-node",
+    "name": "@blindpay/node-sdk",
     "version": "1.0.0",
-    "description": "Blindpay API wrapper",
+    "description": "Official Node.js SDK for Blindpay API - Global payments infrastructure",
     "keywords": [
         "blindpay",
-        "global payments",
-        "api infrastructure",
-        "api"
+        "payments",
+        "api",
+        "sdk",
+        "global-payments",
+        "payment-processing"
     ],
     "homepage": "https://github.com/blindpaylabs/node-sdk",
     "author": "Blindpay <gabriel@blindpay.com> (https://blindpay.com/)",
-    "contributors": [
-        "Gabriel Alves <alves@blindpay.com> (https://alvseven.com/)"
-    ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/blindpaylabs/node-sdk.git"
+        "url": "git+https://github.com/blindpaylabs/node-sdk.git"
     },
     "bugs": "https://github.com/blindpaylabs/node-sdk/issues",
     "engines": {
@@ -28,6 +27,7 @@
         "@biomejs/biome": "2.2.2",
         "@changesets/cli": "2.29.6",
         "@types/node": ">=12.0.0",
+        "@vitest/coverage-v8": "3.2.4",
         "tsup": "8.5.0",
         "typescript": "5.9.2",
         "vitest": "3.2.4",
@@ -49,7 +49,8 @@
         "build": "tsup src/index.ts src/resources/ --format cjs,esm --dts",
         "lint:check": "biome check .",
         "lint:fix": "biome check --write .",
-        "test": "vitest --watch=false"
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
     "exports": {
         ".": {
@@ -57,5 +58,6 @@
             "import": "./dist/index.mjs",
             "require": "./dist/index.js"
         }
-    }
+    },
+    "packageManager": "bun@1.2.18"
 }

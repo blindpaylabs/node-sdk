@@ -20,7 +20,8 @@ describe("Payins", () => {
                     {
                         receiver_id: "re_000000000000",
                         id: "re_000000000000",
-                        pix_code: "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
+                        pix_code:
+                            "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
                         memo_code: "8K45GHBNT6BQ6462",
                         clabe: "014027000000000008",
                         status: "processing",
@@ -126,7 +127,8 @@ describe("Payins", () => {
             const mockedPayin: GetPayinResponse = {
                 receiver_id: "re_000000000000",
                 id: "re_000000000000",
-                pix_code: "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
+                pix_code:
+                    "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
                 memo_code: "8K45GHBNT6BQ6462",
                 clabe: "014027000000000008",
                 status: "processing",
@@ -226,7 +228,8 @@ describe("Payins", () => {
             const mockedPayinTrack: GetPayinTrackResponse = {
                 receiver_id: "re_000000000000",
                 id: "re_000000000000",
-                pix_code: "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
+                pix_code:
+                    "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
                 memo_code: "8K45GHBNT6BQ6462",
                 clabe: "014027000000000008",
                 status: "processing",
@@ -329,7 +332,8 @@ describe("Payins", () => {
                 {
                     receiver_id: "re_000000000000",
                     id: "re_000000000000",
-                    pix_code: "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
+                    pix_code:
+                        "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
                     memo_code: "8K45GHBNT6BQ6462",
                     clabe: "014027000000000008",
                     status: "processing",
@@ -430,7 +434,8 @@ describe("Payins", () => {
             const mockedEvmPayin: CreateEvmPayinResponse = {
                 id: "pi_000000000000",
                 status: "processing",
-                pix_code: "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
+                pix_code:
+                    "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/bcf07f6c4110454e9fd6f120bab13e835204000053039865802BR5915Blind Pay, Inc.6010Vila Velha62070503***6304BCAB",
                 memo_code: "8K45GHBNT6BQ6462",
                 clabe: "014027000000000008",
                 tracking_complete: {
