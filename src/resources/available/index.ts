@@ -55,18 +55,18 @@ export type GetBankDetailsResponse = Array<{
     label: string;
     regex: string;
     key: BankDetailKey;
-    items: Array<{
+    items?: Array<{
         label: string;
         value: string;
-        is_active: boolean;
+        is_active?: boolean;
     }>;
     required: boolean;
-}>
+}>;
 
 export type GetRailsResponse = Array<{
     label: string;
     value: Rail;
-    country: boolean;
+    country: string;
 }>;
 
 export function createAvailableResource(client: InternalApiClient) {

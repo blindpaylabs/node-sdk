@@ -1,7 +1,25 @@
 import type { BlindpayApiResponse } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type PartnerFee = {
+export type ListPartnerFeesInput = {
+    instanceId: string;
+};
+
+export type ListPartnerFeesResponse = Array<{
+    id: string;
+    instance_id: string;
+    name: string;
+    payout_percentage_fee: number;
+    payout_flat_fee: number;
+    payin_percentage_fee: number;
+    payin_flat_fee: number;
+    evm_wallet_address: string;
+    stellar_wallet_address: string;
+}>;
+
+export type CreatePartnerFeeInput = {
+    instanceId: string;
+    virtual_account_set?: boolean | null;
     evm_wallet_address: string;
     name: string;
     payin_flat_fee: number;
@@ -9,18 +27,7 @@ export type PartnerFee = {
     payout_flat_fee: number;
     payout_percentage_fee: number;
     stellar_wallet_address?: string | null;
-    virtual_account_set?: boolean | null;
 };
-
-export type ListPartnerFeesInput = {
-    instanceId: string;
-};
-
-export type ListPartnerFeesResponse = PartnerFee[];
-
-export type CreatePartnerFeeInput = {
-    instanceId: string;
-} & PartnerFee;
 
 export type CreatePartnerFeeResponse = {
     id: string;
@@ -39,7 +46,17 @@ export type GetPartnerFeeInput = {
     id: string;
 };
 
-export type GetPartnerFeeResponse = PartnerFee;
+export type GetPartnerFeeResponse = {
+    id: string;
+    instance_id: string;
+    evm_wallet_address: string;
+    name: string;
+    payin_flat_fee: number;
+    payin_percentage_fee: number;
+    payout_flat_fee: number;
+    payout_percentage_fee: number;
+    stellar_wallet_address?: string | null;
+};
 
 export type DeletePartnerFeeInput = {
     instanceId: string;

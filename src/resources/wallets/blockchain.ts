@@ -1,16 +1,6 @@
 import type { BlindpayApiResponse, Network } from "../../../types";
 import type { InternalApiClient } from "../../internal/api-client";
 
-export type BlockchainWallet = {
-    id: string;
-    name: string;
-    network: Network;
-    address?: string;
-    signature_tx_hash?: string;
-    is_account_abstraction: boolean;
-    receiver_id: string;
-};
-
 export type GetBlockchainWalletMessage = {
     receiverId: string;
     instanceId: string;
@@ -25,9 +15,15 @@ export type ListBlockchainWalletsInput = {
     receiverId: string;
 };
 
-export type ListBlockchainWalletsResponse = {
-    data: BlockchainWallet[];
-};
+export type ListBlockchainWalletsResponse = Array<{
+    id: string;
+    name: string;
+    network: Network;
+    address?: string;
+    signature_tx_hash?: string;
+    is_account_abstraction: boolean;
+    receiver_id: string;
+}>;
 
 export type CreateBlockchainWalletInput = {
     instanceId: string;
@@ -52,13 +48,28 @@ export type DeleteBlockchainWalletInput = {
     id: string;
 };
 
-export type GetBlockchainWalletResponse = BlockchainWallet;
+export type GetBlockchainWalletResponse = {
+    id: string;
+    name: string;
+    network: Network;
+    address?: string;
+    signature_tx_hash?: string;
+    is_account_abstraction: boolean;
+    receiver_id: string;
+};
 
-export type CreateBlockchainWalletResponse = BlockchainWallet;
+export type CreateBlockchainWalletResponse = {
+    id: string;
+    name: string;
+    network: Network;
+    address?: string;
+    signature_tx_hash?: string;
+    is_account_abstraction: boolean;
+    receiver_id: string;
+};
 
 export type CreateAssetTrustlineInput = {
     instanceId: string;
-
     address: string;
 };
 
@@ -68,7 +79,6 @@ export type CreateAssetTrustlineResponse = {
 
 export type MintUsdbStellarInput = {
     instanceId: string;
-
     address: string;
     amount: string;
     signedXdr: string;
@@ -108,7 +118,7 @@ export function createBlockchainWalletsResource(client: InternalApiClient) {
             instanceId,
             receiverId,
             id,
-        }: GetBlockchainWalletInput): Promise<BlindpayApiResponse<BlockchainWallet>> {
+        }: GetBlockchainWalletInput): Promise<BlindpayApiResponse<GetBlockchainWalletResponse>> {
             return client.get(
                 `/instances/${instanceId}/receivers/${receiverId}/blockchain-wallets/${id}`
             );

@@ -10,7 +10,6 @@ import type { InternalApiClient } from "../../internal/api-client";
 
 export type CreateQuoteInput = {
     instanceId: string;
-
     bank_account_id: string;
     currency_type: CurrencyType;
     network?: Network | null;
@@ -49,7 +48,6 @@ export type CreateQuoteResponse = {
 
 export type GetFxRateInput = {
     instanceId: string;
-
     currency_type: CurrencyType;
     from: Currency;
     to: Currency;
