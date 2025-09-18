@@ -49,8 +49,8 @@ describe("Api keys", () => {
             });
 
             const { data, error } = await blindpay.instances.apiKeys.get({
-                instanceId: "123",
-                id: "123",
+                instanceId: "in_000000000000",
+                id: "ap_000000000000",
             });
 
             expect(error).toBeNull();
@@ -80,7 +80,7 @@ describe("Api keys", () => {
             });
 
             const { data, error } = await blindpay.instances.apiKeys.list({
-                instanceId: "123",
+                instanceId: "in_000000000000",
             });
 
             expect(error).toBeNull();
@@ -100,8 +100,8 @@ describe("Api keys", () => {
             );
 
             const { data, error } = await blindpay.instances.apiKeys.delete({
-                instanceId: "123",
-                id: "123",
+                instanceId: "in_000000000000",
+                id: "ap_000000000000",
             });
 
             expect(error).toBeNull();

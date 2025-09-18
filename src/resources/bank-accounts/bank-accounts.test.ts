@@ -31,8 +31,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.createPix({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 name: "PIX Account",
                 pix_key: "14947677768",
             });
@@ -60,8 +60,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.createArgentinaTransfers({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 name: "Argentina Transfers Account",
                 beneficiary_name: "Individual full name or business name",
                 transfers_type: "CVU",
@@ -91,8 +91,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.createSpei({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 name: "SPEI Account",
                 beneficiary_name: "Individual full name or business name",
                 spei_protocol: "clabe",
@@ -127,8 +127,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.createColombiaAch({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 name: "Colombia ACH Account",
                 account_type: "checking",
                 ach_cop_beneficiary_first_name: "Fernando",
@@ -177,8 +177,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.createAch({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 name: "ACH Account",
                 account_class: "individual",
                 account_number: "1001001234",
@@ -215,8 +215,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.createWire({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 name: "Wire Account",
                 account_number: "1001001234",
                 beneficiary_name: "Individual full name or business name",
@@ -277,8 +277,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.createInternationalSwift({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 name: "International Swift Account",
                 swift_account_holder_name: "John Doe",
                 swift_account_number_iban: "123456789",
@@ -329,8 +329,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.get({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 id: "ba_000000000000",
             });
 
@@ -414,8 +414,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.list({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
             });
 
             expect(error).toBeNull();
@@ -430,8 +430,8 @@ describe("Bank accounts", () => {
             });
 
             const { data, error } = await blindpay.receivers.bankAccounts.delete({
-                instanceId: "inst_123",
-                receiverId: "rcv_123",
+                instanceId: "in_000000000000",
+                receiverId: "re_000000000000",
                 id: "ba_000000000000",
             });
 
