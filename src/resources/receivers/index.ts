@@ -122,7 +122,7 @@ export type ListReceiversInput = {
     instanceId: string;
 };
 
-export type ListReceiversResponse = Array<Receiver>;
+export type ListReceiversResponse = Receiver[]
 
 export type CreateReceiverInput = {
     instanceId: string;
