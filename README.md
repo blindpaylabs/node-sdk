@@ -2,7 +2,7 @@
 
 The official Node.js SDK for [Blindpay](https://blindpay.com) - Global payments infrastructure made simple.
 
-## 🚀 Installation
+## Installation
 
 ```bash
 npm install @blindpay/node-sdk
@@ -24,7 +24,7 @@ import { Blindpay } from '@blindpay/node-sdk';
 const blindpay = new Blindpay('your-api-key-here');
 ```
 
-## 📖 Quick Start
+## Quick Start
 
 ### Check for available rails
 
@@ -44,7 +44,7 @@ async function getAvailableRails() {
  getAvailableRails()
 ```
 
-## 🔄 Response Format
+## Response Format
 
 All API methods return a consistent response format:
 
@@ -77,7 +77,7 @@ export type BlindpaySuccessResponse<T> = {
 
 ### Error Response
 
-```javascript
+```typescript
 {
   data: null,
   error: {
@@ -86,7 +86,7 @@ export type BlindpaySuccessResponse<T> = {
 }
 ```
 
-## 🔒 Error Handling
+## Error Handling
 
 The SDK uses a consistent error handling pattern. Always check for errors:
 
