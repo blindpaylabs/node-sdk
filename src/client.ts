@@ -10,12 +10,12 @@ import { createPartnerFeesResource } from "./resources/partner-fees";
 import { createPayinsResource } from "./resources/payins";
 import { createPayinQuotesResource } from "./resources/payins/quotes";
 import { createPayoutsResource } from "./resources/payouts";
+import { createQuotesResource } from "./resources/quotes";
 import { createReceiversResource } from "./resources/receivers";
 import { createVirtualAccountsResource } from "./resources/virtual-accounts";
 import { createBlockchainWalletsResource } from "./resources/wallets/blockchain";
 import { createOfframpWalletsResource } from "./resources/wallets/offramp";
 import { createWebhookEndpointsResource } from "./resources/webhooks";
-import { createQuotesResource } from "./resources/quotes";
 
 export class Blindpay {
     // Options
@@ -27,7 +27,9 @@ export class Blindpay {
     // Resources
     readonly available: ReturnType<typeof createAvailableResource>;
     readonly partnerFees: ReturnType<typeof createPartnerFeesResource>;
-    readonly payins: ReturnType<typeof createPayinsResource> & { quotes: ReturnType<typeof createPayinQuotesResource> };
+    readonly payins: ReturnType<typeof createPayinsResource> & {
+        quotes: ReturnType<typeof createPayinQuotesResource>;
+    };
     readonly quotes: ReturnType<typeof createQuotesResource>;
     readonly payouts: ReturnType<typeof createPayoutsResource>;
     readonly virtualAccounts: ReturnType<typeof createVirtualAccountsResource>;
@@ -110,28 +112,24 @@ export class Blindpay {
                 body: body ? JSON.stringify(body) : undefined,
             });
 
-            
             if (!response.ok) {
                 const error = await response.json();
                 return {
                     data: null,
                     error: {
-                        message: error?.message ?? 'Unknown error',
+                        message: error?.message ?? "Unknown error",
                     },
                 };
             }
-            
-            const data = await response.json();
 
+            const data = await response.json();
 
             return {
                 data,
                 error: null,
             };
-
         } catch (error) {
             if (error instanceof Error) {
-
                 return {
                     data: null,
                     error: {
@@ -140,12 +138,18 @@ export class Blindpay {
                 };
             }
 
-            const errorMessage = error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' ? error.message : 'Unknown error';
+            const errorMessage =
+                error &&
+                typeof error === "object" &&
+                "message" in error &&
+                typeof error.message === "string"
+                    ? error.message
+                    : "Unknown error";
 
             return {
                 data: null,
                 error: {
-                    message: errorMessage
+                    message: errorMessage,
                 },
             };
         }
