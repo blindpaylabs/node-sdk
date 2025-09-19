@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { Blindpay } from "../../client";
 import type {
     CreateAchResponse,
+    CreateArgentinaTransfersResponse,
     CreateColombiaAchResponse,
     CreateInternationalSwiftResponse,
     CreatePixResponse,
@@ -44,8 +45,7 @@ describe("Bank accounts", () => {
 
     describe("Create argentina transfers bank account", () => {
         it("should create an argentina transfers bank account", async () => {
-            const mockedArgentinaTransfersAccount = {
-                // TODO: add type here
+            const mockedArgentinaTransfersAccount: CreateArgentinaTransfersResponse = {
                 id: "ba_000000000000",
                 type: "transfers_bitso",
                 name: "Argentina Transfers Account",

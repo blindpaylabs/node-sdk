@@ -243,7 +243,13 @@ export type CreateArgentinaTransfersInput = {
 };
 
 export type CreateArgentinaTransfersResponse = {
-    // TODO
+    id: string;
+    type: "transfers_bitso";
+    name: string;
+    beneficiary_name: string;
+    transfers_type: ArgentinaTransfers;
+    transfers_account: string;
+    created_at: string;
 };
 
 export type CreateSpeiInput = {
