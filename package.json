@@ -50,7 +50,8 @@
         "lint:check": "biome check .",
         "lint:fix": "biome check --write .",
         "test": "vitest run",
-        "test:coverage": "vitest run --coverage"
+        "test:coverage": "vitest run --coverage",
+        "release": "bun run build && changeset publish"
     },
     "exports": {
         ".": {
