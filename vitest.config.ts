@@ -7,10 +7,7 @@ export default defineConfig({
         setupFiles: ["./vitest.setup.ts"],
         coverage: {
             include: ["src/**/*.ts"],
-            exclude: [
-                "src/internal/**",
-                "src/index.ts",
-            ],
-        }
+            exclude: ["src/internal/**", "src/index.ts"],
+        },
     },
 });

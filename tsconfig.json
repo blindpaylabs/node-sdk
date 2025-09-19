@@ -6,6 +6,7 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "stripInternal": true,
+        "module": "ESNext",
         "moduleResolution": "node",
         "noEmit": true,
         "noFallthroughCasesInSwitch": true,

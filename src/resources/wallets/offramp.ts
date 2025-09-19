@@ -19,7 +19,7 @@ export type ListOfframpWalletsInput = {
     bankAccountId: string;
 };
 
-export type ListOfframpWalletsResponse = OfframpWallet[]
+export type ListOfframpWalletsResponse = OfframpWallet[];
 
 export type CreateOfframpWalletInput = {
     receiverId: string;
